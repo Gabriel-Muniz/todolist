@@ -44,7 +44,7 @@ export class Project {
   }
 
   set projectTasks(newProjectTasks){
-    this._priority = newProjectTasks;
+    this._projectTasks = newProjectTasks;
   }
 
   addTask(newTask) {
