@@ -26,23 +26,23 @@ export class Task {
     return this._progress;
   }
 
-  set progress(newProgress){
+  set progress(newProgress) {
     this._progress = newProgress;
   }
 
-  get taskSteps(){
+  get taskSteps() {
     return this._taskSteps;
   }
 
-  set taskSteps(newTaskSteps){
+  set taskSteps(newTaskSteps) {
     this._taskSteps = newTaskSteps;
   }
 
-  addTask(newStep) {
+  addStep(newStep) {
     this._taskSteps.push(newStep);
   }
 
-  removeTask(stepIndex) {
+  removeStep(stepIndex) {
     this._taskSteps.splice(stepIndex, 1);
   }
 }
