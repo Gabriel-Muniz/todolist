@@ -23,7 +23,9 @@ export class Task {
   }
 
   get progress() {
-    return this._progress;
+    let milestone = 100 / this._taskSteps.length;
+    let doneSteps = this._taskSteps.filter(step => step._status == true);
+    return doneSteps.length;
   }
 
   set progress(newProgress) {

@@ -45,11 +45,4 @@ console.log(stringifiedProjects);
 // console.log(reparsedProjects);
 
 projects = deserializeProjects(stringifiedProjects);
-
-console.log(projects)
-
-projects[0].title = 'Titulo mudado via set';
-
-projects[0].projectTasks[0]._progress = 69;
-
-console.log(projects)
+console.log(projects[1].projectTasks[0].progress)
