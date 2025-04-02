@@ -8,10 +8,14 @@ let project1 = new Project('Projeto de estudar matemática', 'Projeto de teste',
 
 let task1 = new Task('Task de teste', '2005-25-06', 0)
 
-let step1 = new Step('Step de teste')
+let step1 = new Step('Step de teste 1', true);
+let step2 = new Step('Step de teste 2')
+let step3 = new Step('Step de teste 3')
 
 project1.addTask(task1);
 task1.addStep(step1);
+task1.addStep(step2);
+task1.addStep(step3);
 
 let projects = [];
 
