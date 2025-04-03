@@ -3,11 +3,11 @@ import { Project } from "./models/Projects";
 import { Step } from "./models/Step";
 import { Task } from "./models/Task";
 console.log('%c Working', 'color: lightgreen');
-import {format} from "date-fns"
+import { format } from "date-fns"
 
 let project1 = new Project('Projeto de estudar matemática', 'Projeto de teste', '2025-05-08', 'high');
 
-let task1 = new Task('Task de teste', '2005-25-06', 0)
+let task1 = new Task('Task de teste', '2025-04-15', 0)
 
 let step1 = new Step('Step de teste 1', true);
 let step2 = new Step('Step de teste 2')
@@ -46,10 +46,7 @@ function deserializeProjects(jsonString) {
   })
 }
 
-console.log(stringifiedProjects);
 // console.log(reparsedProjects);
 
 projects = deserializeProjects(stringifiedProjects);
-console.log(projects[1].projectTasks[0].progress);
-
-console.log(format(new Date(2000, 4, 8), "dd/MM/yyyy"));
+console.log(projects[1].projectTasks[0].dueDate);
