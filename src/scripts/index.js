@@ -3,6 +3,7 @@ import { Project } from "./models/Projects";
 import { Step } from "./models/Step";
 import { Task } from "./models/Task";
 console.log('%c Working', 'color: lightgreen');
+import {format} from "date-fns"
 
 let project1 = new Project('Projeto de estudar matemática', 'Projeto de teste', '2025-05-08', 'high');
 
@@ -49,4 +50,6 @@ console.log(stringifiedProjects);
 // console.log(reparsedProjects);
 
 projects = deserializeProjects(stringifiedProjects);
-console.log(projects[1].projectTasks[0].progress)
+console.log(projects[1].projectTasks[0].progress);
+
+console.log(format(new Date(2000, 4, 8), "dd/MM/yyyy"));
