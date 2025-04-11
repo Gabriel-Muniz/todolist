@@ -5,5 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-do list</title>
   </head>
-  <body></body>
+  <body>
+    <div class="body">
+      <div class="sidebar-section"></div>
+      <div class="main-section"></div>
+    </div>
+  </body>
+
+  <template id="project-template-sidebar">
+    <div class="project-wrapper sidebar">
+      <div class="project-header sidebar">
+        <h3 class="project-title sidebar">Placeholder Project</h3>
+        <span class="project-dueDate sidebar">08/05/2000</span>
+      </div>
+      <div class="project-body sidebar">
+        <ul class="project-tasks sidebar"></ul>
+      </div>
+    </div>
+  </template>
+
+  <template id="task-template-sidebar">
+    <li class="task-wrapper sidebar">
+      <div class="task-header sidebar">
+        <h4 class="task-title sidebar">Placeholder Task</h4>
+        <span class="task-progress">69%</span>
+      </div>
+      <div class="task-body sidebar">
+        <ul class="task-steps sidebar"></ul>
+      </div>
+    </li>
+  </template>
+
+  <template id="step-template-sidebar">
+    <li class="step-wrapper">
+      <input type="checkbox" class="step-status" name="" id="" />
+      <h5 class="step-title">Placeholder Step</h5>
+    </li>
+  </template>
 </html>

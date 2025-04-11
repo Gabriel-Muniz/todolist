@@ -12,6 +12,10 @@ export class Step{
     this._title = newTitle
   }
 
+  get status (){
+    return this._status;
+  }
+
   changeStatus(){
     this._status = !this._status;
   }

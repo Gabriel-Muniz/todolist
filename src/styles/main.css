@@ -1,0 +1,15 @@
+body {
+  min-height: 100vh;
+}
+.body {
+  display: flex;
+
+  height: 100vh;
+}
+.sidebar-section {
+  flex: 1;
+  border-right: 2px solid black;
+}
+.main-section {
+  flex: 3;
+}

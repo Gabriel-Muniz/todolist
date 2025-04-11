@@ -1,17 +1,31 @@
 import "../styles/reset.css";
+import "../styles/main.css";
+
 import { Project } from "./models/Projects";
 import { Step } from "./models/Step";
 import { Task } from "./models/Task";
-console.log('%c Working', 'color: lightgreen');
-import { format } from "date-fns"
+
+import { renderSidebarProjects } from "./modules/projectView";
 
 let project1 = new Project('Projeto de estudar matemática', 'Projeto de teste', '2025-05-08', 'high');
 
 let task1 = new Task('Task de teste', '2025-04-15', 0)
 
 let step1 = new Step('Step de teste 1', true);
-let step2 = new Step('Step de teste 2')
-let step3 = new Step('Step de teste 3')
+let step2 = new Step('Step de teste 2', true)
+let step3 = new Step('Step de teste 3', true)
+
+let project2 = new Project('Projeto de trabalhar', 'Projeto de teste 2', '2000/05/08', 'low');
+
+let task2 = new Task('Task de teste 2', '08-04-2025');
+
+let step4 = new Step('Step de teste 4');
+let step5 = new Step('Step de teste 5');
+
+task2.addStep(step4);
+task2.addStep(step5);
+
+project2.addTask(task2)
 
 project1.addTask(task1);
 task1.addStep(step1);
@@ -22,7 +36,6 @@ let projects = [];
 
 projects.push(project1);
 
-let project2 = project1;
 projects.push(project2);
 
 let stringifiedProjects = JSON.stringify(projects);
@@ -50,3 +63,5 @@ function deserializeProjects(jsonString) {
 
 projects = deserializeProjects(stringifiedProjects);
 console.log(projects[1].projectTasks[0].dueDate);
+
+renderSidebarProjects(projects);
