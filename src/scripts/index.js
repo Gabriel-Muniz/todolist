@@ -22,6 +22,15 @@ let task2 = new Task('Task de teste 2', '08-04-2025');
 let step4 = new Step('Step de teste 4');
 let step5 = new Step('Step de teste 5');
 
+let task3 = new Task('Task de teste 3', '04-14-2025');
+let step6 = new Step('Step de teste 6', true);
+let step7 = new Step('Step de teste 7');
+
+task3.addStep(step6);
+task3.addStep(step7);
+
+project2.addTask(task3);
+
 task2.addStep(step4);
 task2.addStep(step5);
 

@@ -7,9 +7,43 @@ body {
   height: 100vh;
 }
 .sidebar-section {
-  flex: 1;
+  display: flex;
+  align-items: center;
+  flex: 2;
+  flex-direction: column;
   border-right: 2px solid black;
+  padding: 20px 0;
 }
 .main-section {
   flex: 3;
+}
+.project-wrapper.sidebar {
+  width: 80%;
+  border: 1px solid black;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px 5px;
+}
+
+.project-header.sidebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+ul {
+  padding: 0 20px;
+  list-style: none;
+}
+.task-header.sidebar {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin-top: 4px;
+}
+.step-wrapper {
+  margin: 2px 0;
+  display: flex;
+}
+.step-title {
+  margin-left: 8px;
 }
