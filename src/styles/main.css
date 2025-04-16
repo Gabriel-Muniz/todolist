@@ -50,6 +50,3 @@ ul {
 .hidden {
   display: none;
 }
-.hidden::before {
-  content: "v";
-}
