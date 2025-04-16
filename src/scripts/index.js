@@ -6,6 +6,7 @@ import { Step } from "./models/Step";
 import { Task } from "./models/Task";
 
 import { renderSidebarProjects } from "./modules/projectView";
+import { attachEventListeners } from "./utils/interfaceListeners";
 
 let project1 = new Project('Projeto de estudar matemática', 'Projeto de teste', '2025-05-08', 'high');
 
@@ -74,3 +75,4 @@ projects = deserializeProjects(stringifiedProjects);
 console.log(projects[1].projectTasks[0].dueDate);
 
 renderSidebarProjects(projects);
+attachEventListeners();
