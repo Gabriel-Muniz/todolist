@@ -37,8 +37,14 @@ ul {
 .task-header.sidebar {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   margin-top: 4px;
+}
+.task-wrapper:has(> .hidden):not(:last-child) {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+}
+
+.task-body {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 .step-wrapper {
   margin: 2px 0;
