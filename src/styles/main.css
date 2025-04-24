@@ -15,6 +15,10 @@ body {
   padding: 20px 0;
 }
 .main-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   flex: 3;
 }
 .project-wrapper.sidebar {
@@ -55,4 +59,19 @@ ul {
 }
 .hidden {
   display: none;
+}
+
+.project-wrapper.main {
+  border: 2px solid black;
+  width: 600px;
+  padding: 12px 6px;
+}
+.project-header.main {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+.task-header.main {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted black;
 }

@@ -5,10 +5,10 @@ import { Project } from "./models/Projects";
 import { Step } from "./models/Step";
 import { Task } from "./models/Task";
 
-import { renderSidebarProjects } from "./modules/projectView";
+import { renderProject, renderSidebarProjects } from "./modules/projectView";
 import { attachEventListeners } from "./utils/interfaceListeners";
 
-let project1 = new Project('Projeto de estudar matemática', 'Projeto de teste', '2025-05-08', 'high');
+let project1 = new Project('Projeto de estudar matemática', 'Projeto de teste. Inicializado no index.js para fins de teste.', '2025-05-08', 'high');
 
 let task1 = new Task('Task de teste', '2025-04-15', 0)
 
@@ -76,3 +76,5 @@ console.log(projects[1].projectTasks[0].dueDate);
 
 renderSidebarProjects(projects);
 attachEventListeners();
+
+renderProject(projects[0]);
