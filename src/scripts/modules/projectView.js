@@ -5,10 +5,15 @@ export function renderSidebarProjects(projects) {
 
   const sidebar = document.querySelector('.sidebar-section');
 
-  projects.map(project => {
+  const projectsSize = projects.length - 1;
+
+  projects.map((project, index) => {
 
     const clone = template.content.cloneNode(true);
 
+    const projectWrapper = clone.querySelector('.project-wrapper');
+
+    projectWrapper.setAttribute('data-pj-index', index);
     const projectTitle = clone.querySelector('.project-title');
 
     const projectDuedate = clone.querySelector('.project-dueDate');
@@ -27,7 +32,7 @@ export function renderSidebarProjects(projects) {
   })
 }
 
-export function renderProject(project){
+export function renderProject(project) {
   const mainSection = document.querySelector('.main-section');
 
   const template = document.getElementById('project-template-main');
@@ -49,8 +54,8 @@ export function renderProject(project){
   project.projectTasks.map(currentTask => {
     projectTasksContainer.append(renderTaskMain(currentTask))
   })
-  
+
 
   mainSection.append(clone);
-  
+
 }
