@@ -1,5 +1,10 @@
+import { getProjects } from "..";
+import { renderProject } from "./projectView";
+
+const sidebar = document.querySelector('.sidebar-section');
+const mainSection = document.querySelector('.main-section');
+
 export function attachEventListeners() {
-  const sidebar = document.querySelector('.sidebar-section');
 
   const projectHeaders = document.querySelectorAll('.project-header');
 
@@ -9,6 +14,11 @@ export function attachEventListeners() {
       const projectBody = parent.querySelector('.project-body');
 
       projectBody.classList.toggle('hidden');
+
+      const projectIndex = parent.dataset.pjIndex;
+      
+      cleanMainSection();
+      renderProject(getProjects()[projectIndex])
     })
   })
 
@@ -23,4 +33,8 @@ export function attachEventListeners() {
 
     })
   })
+}
+
+export function cleanMainSection(){
+  mainSection.innerHTML = '';
 }
