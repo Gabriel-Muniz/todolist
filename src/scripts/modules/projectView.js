@@ -5,8 +5,6 @@ export function renderSidebarProjects(projects) {
 
   const sidebar = document.querySelector('.sidebar-section');
 
-  const projectsSize = projects.length - 1;
-
   projects.map((project, index) => {
 
     const clone = template.content.cloneNode(true);

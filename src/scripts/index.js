@@ -6,7 +6,7 @@ import { Step } from "./models/Step";
 import { Task } from "./models/Task";
 
 import { renderProject, renderSidebarProjects } from "./modules/projectView";
-import { attachEventListeners } from "./utils/interfaceListeners";
+import { attachEventListeners } from "./modules/domManager";
 
 let project1 = new Project('Projeto de estudar matemática', 'Projeto de teste. Inicializado no index.js para fins de teste.', '2025-05-08', 'high');
 
@@ -71,8 +71,10 @@ function deserializeProjects(jsonString) {
 
 // console.log(reparsedProjects);
 
-projects = deserializeProjects(stringifiedProjects);
-console.log(projects[1].projectTasks[0].dueDate);
+export function getProjects() {
+  return deserializeProjects(stringifiedProjects);
+}
+// projects = deserializeProjects(stringifiedProjects);
 
 renderSidebarProjects(projects);
 attachEventListeners();
