@@ -1,5 +1,5 @@
-import { getProjects } from "..";
 import { renderProject } from "./projectView";
+import { deserializeProjects } from "../utils/storageManager";
 
 const sidebar = document.querySelector('.sidebar-section');
 const mainSection = document.querySelector('.main-section');
@@ -18,7 +18,7 @@ export function attachEventListeners() {
       const projectIndex = parent.dataset.pjIndex;
       
       cleanMainSection();
-      renderProject(getProjects()[projectIndex])
+      renderProject(deserializeProjects()[projectIndex])
     })
   })
 
