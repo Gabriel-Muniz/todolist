@@ -1,5 +1,6 @@
 import { renderProject } from "./projectView";
-import { deserializeProjects } from "../utils/storageManager";
+import { deserializeProjects, updateLocalStorage } from "../utils/storageManager";
+import { de } from "date-fns/locale";
 
 const sidebar = document.querySelector('.sidebar-section');
 const mainSection = document.querySelector('.main-section');
@@ -13,13 +14,41 @@ export function attachEventListeners() {
       const parent = e.currentTarget.parentNode; //Project-Wrapper
       const projectBody = parent.querySelector('.project-body');
 
+      const projectIndex = parent.dataset.pjIndex;
+
+      const currentProject = deserializeProjects()[projectIndex];
+
       projectBody.classList.toggle('hidden');
 
-      const projectIndex = parent.dataset.pjIndex;
-      
+
       cleanMainSection();
-      renderProject(deserializeProjects()[projectIndex])
+      renderProject(currentProject, projectIndex)
     })
+  })
+
+  mainSection.addEventListener('keyup', (e) => {
+    const inEdit = e.currentTarget;
+    const projectWrapper = inEdit.querySelector('.project-wrapper');
+    const projectIndex = projectWrapper.dataset.pjIndex;
+
+    const projects = deserializeProjects();
+    const currentProject = projects[projectIndex];
+
+    if (inEdit) {
+      const inputField = e.target.closest('[data-input]');
+
+      if (inputField.dataset.type == 'inProject') {
+        console.log(projects);
+
+        currentProject[`${inputField.dataset.input}`] = inputField.textContent;
+
+        console.log(projects);
+        
+        updateLocalStorage(projects);
+      }
+    }
+
+
   })
 
   const taskHeaders = document.querySelectorAll('.task-header')
@@ -35,6 +64,6 @@ export function attachEventListeners() {
   })
 }
 
-export function cleanMainSection(){
+export function cleanMainSection() {
   mainSection.innerHTML = '';
 }

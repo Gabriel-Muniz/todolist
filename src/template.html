@@ -46,12 +46,31 @@
   <template id="project-template-main">
     <div class="project-wrapper main">
       <div class="project-header main">
-        <h2 class="project-title main">Placeholder Title Main</h2>
-        <span class="project-dueDate main">SaveTheDate</span>
-        <p class="project-description main">
+        <div
+          class="project-title main"
+          contenteditable="true"
+          data-type="inProject"
+          data-input="title"
+        >
+          Placeholder Title Main
+        </div>
+        <div
+          class="project-dueDate main"
+          contenteditable="true"
+          data-type="inProject"
+          data-input="dueDate"
+        >
+          SaveTheDate
+        </div>
+        <div
+          class="project-description main"
+          contenteditable="true"
+          data-type="inProject"
+          data-input="description"
+        >
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non culpa
           reprehenderit aliquam. At, perspiciatis neque!
-        </p>
+        </div>
       </div>
       <ul class="project-tasks main"></ul>
     </div>

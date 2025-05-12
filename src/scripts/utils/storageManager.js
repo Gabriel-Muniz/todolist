@@ -40,6 +40,7 @@ export function checkLocalStorage() {
     task1.addStep(step4);
 
     let task2 = new Task('Clean my study space', '2025-05-10');
+        // FALTA JOGAR PRO LOCAL STORAGE!
 
     let step5 = new Step('Throw away trash');
     let step6 = new Step('Clean table');
@@ -111,4 +112,10 @@ export function deserializeProjects() {
 
     return project;
   })
+}
+
+export function updateLocalStorage(updatedProjects){
+  const stringifiedProjects = JSON.stringify(updatedProjects);
+  localStorage.removeItem('projects');
+  localStorage.setItem('projects', stringifiedProjects)
 }
