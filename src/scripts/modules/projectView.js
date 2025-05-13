@@ -1,9 +1,15 @@
+import { deserializeProjects } from "../utils/storageManager";
 import { renderTaskMain, renderTaskSidebar } from "./taskView";
 
-export function renderSidebarProjects(projects) {
+export function renderSidebarProjects() {
+
+  const projects = deserializeProjects();
+
   const template = document.getElementById('project-template-sidebar')
 
   const sidebar = document.querySelector('.sidebar-section');
+
+  sidebar.innerHTML = ''
 
   projects.map((project, index) => {
 
