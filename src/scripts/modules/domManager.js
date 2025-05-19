@@ -41,13 +41,13 @@ export function attachEventListeners() {
 
         currentProject[`${inputField.dataset.input}`] = inputField.textContent;
 
-        console.log();
+        const newElemText = currentProject[`${inputField.dataset.input}`];
 
-        updateElement(sidebar.children[projectIndex].querySelector(`.project-${inputField.dataset.input}`), currentProject[`${inputField.dataset.input}`])
-        // console.log(inputField.dataset.input);
+        //Get sidebar element to update
+        const sidebarElemUpdate = sidebar.children[projectIndex].querySelector(`.project-${inputField.dataset.input}`);
 
+        updateElement(sidebarElemUpdate, newElemText);
 
-        // sidebar.children[projectIndex] -> Vai pegar o projeto da sidebar que está sendo editado.
 
         updateLocalStorage(projects);
       }
@@ -74,7 +74,7 @@ export function cleanMainSection() {
 }
 
 function updateElement(element, newText) {
-  if(element){
+  if (element) {
     element.textContent = newText;
   }
 }
