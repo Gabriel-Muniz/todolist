@@ -43,14 +43,34 @@ export function attachEventListeners() {
 
         const newElemText = currentProject[`${inputField.dataset.input}`];
 
-        //Get sidebar element to update
+        //Get sidebar project element to update
         const sidebarElemUpdate = sidebar.children[projectIndex].querySelector(`.project-${inputField.dataset.input}`);
 
         updateElement(sidebarElemUpdate, newElemText);
 
-
-        updateLocalStorage(projects);
       }
+
+      if (inputField.dataset.type == 'inTask') {
+        const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
+
+        const currentTask = currentProject.projectTasks[taskIndex];
+
+        // currentTask[title] = inputField.textContent <- Example
+        currentTask[inputField.dataset.input] = inputField.textContent;
+
+        const newElemText = currentTask[inputField.dataset.input];
+
+        const sidebarTaskUpdate = sidebar.children[projectIndex]
+          .querySelector(`[data-tk-index='${taskIndex}']`)
+          .querySelector('.task-title');
+
+          console.log(sidebarTaskUpdate);
+          
+        updateElement(sidebarTaskUpdate, newElemText);
+
+      }
+      updateLocalStorage(projects);
+
     }
 
 

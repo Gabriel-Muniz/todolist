@@ -79,8 +79,21 @@
   <template id="task-template-main">
     <li class="task-wrapper main">
       <div class="task-header main">
-        <h4 class="task-title main">Task title main</h4>
-        <span class="task-dueDate main">00/00/00</span>
+        <h4
+          class="task-title main"
+          contenteditable="true"
+          data-type="inTask"
+          data-input="title"
+        >
+          Task title main
+        </h4>
+        <span
+          class="task-dueDate main"
+          contenteditable="true"
+          data-type="inTask"
+          data-input="dueDate"
+          >00/00/00</span
+        >
       </div>
       <ul class="task-steps main"></ul>
     </li>

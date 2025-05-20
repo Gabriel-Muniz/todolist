@@ -1,11 +1,13 @@
 import { renderStep } from "./stepView";
 
-export function renderTaskSidebar(task) {
+export function renderTaskSidebar(task, index) {
   const template = document.getElementById('task-template-sidebar');
 
   const clone = template.content.cloneNode(true);
 
   const taskTitle = clone.querySelector('.task-title');
+
+  const taskWrapper = clone.querySelector('.task-wrapper').setAttribute('data-tk-index', index)
 
   const taskProgress = clone.querySelector('.task-progress');
 
@@ -21,10 +23,12 @@ export function renderTaskSidebar(task) {
   return clone;
 }
 
-export function renderTaskMain(task){
+export function renderTaskMain(task, index){
   const template = document.getElementById('task-template-main');
 
   const clone = template.content.cloneNode(true);
+
+  const taskWrapper = clone.querySelector('.task-wrapper');
 
   const taskTitle = clone.querySelector('.task-title');
 
@@ -32,6 +36,7 @@ export function renderTaskMain(task){
 
   taskTitle.textContent = task.title;
   taskDuedate.textContent = task.dueDate;
+  taskWrapper.setAttribute('data-tk-index', index);
 
   const taskSteps = clone.querySelector('.task-steps');
 

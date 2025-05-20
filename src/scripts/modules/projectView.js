@@ -27,8 +27,8 @@ export function renderSidebarProjects() {
 
     const projectTasksContainer = clone.querySelector('.project-tasks');
 
-    project.projectTasks.map(currentTask => {
-      projectTasksContainer.append(renderTaskSidebar(currentTask))
+    project.projectTasks.map((currentTask, index) => {
+      projectTasksContainer.append(renderTaskSidebar(currentTask, index))
     })
 
     sidebar.append(clone);
@@ -60,8 +60,8 @@ export function renderProject(project, index) {
 
   const projectTasksContainer = clone.querySelector('.project-tasks');
 
-  project.projectTasks.map((currentTask) => {
-    projectTasksContainer.append(renderTaskMain(currentTask))
+  project.projectTasks.map((currentTask, index) => {
+    projectTasksContainer.append(renderTaskMain(currentTask, index))
   })
 
 
