@@ -14,10 +14,10 @@ export function renderTaskSidebar(task, index) {
   taskTitle.textContent = task.title;
   taskProgress.textContent = task.progress
 
-  const taskStepsContainer = clone.querySelector('.task-steps');
+  const taskSteps = clone.querySelector('.task-steps');
 
-  task.taskSteps.map(currentStep => {
-    taskStepsContainer.append(renderStep(currentStep));
+  task.taskSteps.map((currentStep, stepIndex) => {
+    taskSteps.append(renderStep(currentStep, stepIndex));
   })
 
   return clone;
@@ -40,8 +40,10 @@ export function renderTaskMain(task, index){
 
   const taskSteps = clone.querySelector('.task-steps');
 
-  task.taskSteps.map(currentStep => {
-    taskSteps.append(renderStep(currentStep));
+  task.taskSteps.map((currentStep, stepIndex) => {
+    //Parameters(Step, StepIndex, InMainSection)
+    taskSteps.append(renderStep(currentStep, stepIndex, true));
+    
   })
 
   return clone;

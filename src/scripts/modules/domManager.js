@@ -34,44 +34,71 @@ export function attachEventListeners() {
     const projects = deserializeProjects();
     const currentProject = projects[projectIndex];
 
-    if (inEdit) {
-      const inputField = e.target.closest('[data-input]');
+    if (!inEdit) return;
 
-      if (inputField.dataset.type == 'inProject') {
+    const inputField = e.target.closest('[data-input]');
 
-        currentProject[`${inputField.dataset.input}`] = inputField.textContent;
+    if (inputField.dataset.type == 'inProject') {
 
-        const newElemText = currentProject[`${inputField.dataset.input}`];
+      currentProject[`${inputField.dataset.input}`] = inputField.textContent;
 
-        //Get sidebar project element to update
-        const sidebarElemUpdate = sidebar.children[projectIndex].querySelector(`.project-${inputField.dataset.input}`);
+      const newElemText = currentProject[`${inputField.dataset.input}`];
 
-        updateElement(sidebarElemUpdate, newElemText);
+      //Get sidebar project element to update
+      const sidebarElemUpdate = sidebar.children[projectIndex].querySelector(`.project-${inputField.dataset.input}`);
 
-      }
-
-      if (inputField.dataset.type == 'inTask') {
-        const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
-
-        const currentTask = currentProject.projectTasks[taskIndex];
-
-        // currentTask[title] = inputField.textContent <- Example
-        currentTask[inputField.dataset.input] = inputField.textContent;
-
-        const newElemText = currentTask[inputField.dataset.input];
-
-        const sidebarTaskUpdate = sidebar.children[projectIndex]
-          .querySelector(`[data-tk-index='${taskIndex}']`)
-          .querySelector('.task-title');
-
-          console.log(sidebarTaskUpdate);
-          
-        updateElement(sidebarTaskUpdate, newElemText);
-
-      }
-      updateLocalStorage(projects);
+      updateElement(sidebarElemUpdate, newElemText);
 
     }
+
+    if (inputField.dataset.type == 'inTask') {
+      const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
+
+      const currentTask = currentProject.projectTasks[taskIndex];
+
+      // currentTask[title] = inputField.textContent <- Example
+      currentTask[inputField.dataset.input] = inputField.textContent;
+
+      const newElemText = currentTask[inputField.dataset.input];
+
+      const sidebarTaskUpdate = sidebar.children[projectIndex]
+        .querySelector(`[data-tk-index='${taskIndex}']`)
+        .querySelector('.task-title');
+
+      console.log(sidebarTaskUpdate);
+
+      updateElement(sidebarTaskUpdate, newElemText);
+
+    }
+
+    if (inputField.dataset.type == 'inStep') {
+
+      const stepTitle = e.target.closest('.step-title').textContent;
+
+      const stepIndex = e.target.closest('.step-wrapper').dataset.stIndex;
+
+      const parentTaskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
+
+      const currentStep = currentProject.projectTasks[parentTaskIndex].taskSteps[stepIndex];
+
+      currentStep.title = stepTitle;
+
+      const newElemText = currentStep.title;
+
+      const sidebarStepUpdate = sidebar.children[projectIndex]
+      .querySelector(`[data-tk-index='${parentTaskIndex}']`)
+      .querySelector('.task-steps')
+      .children[stepIndex]
+      .querySelector('.step-title');
+
+      updateElement(sidebarStepUpdate, newElemText)
+      console.log(sidebarStepUpdate);
+      
+    }
+
+    updateLocalStorage(projects);
+
+
 
 
   })
