@@ -1,5 +1,5 @@
 import { renderProject } from "./projectView";
-import { deserializeProjects, updateLocalStorage } from "../utils/storageManager";
+import { deserializeProjects, getStringifiedProjects, updateLocalStorage } from "../utils/storageManager";
 import { de } from "date-fns/locale";
 
 const sidebar = document.querySelector('.sidebar-section');
@@ -125,3 +125,5 @@ function updateElement(element, newText) {
     element.textContent = newText;
   }
 }
+
+console.log(getStringifiedProjects());

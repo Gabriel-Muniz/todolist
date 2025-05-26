@@ -119,3 +119,7 @@ export function updateLocalStorage(updatedProjects){
   localStorage.removeItem('projects');
   localStorage.setItem('projects', stringifiedProjects)
 }
+
+export function getStringifiedProjects(){
+  return JSON.stringify(localStorage.getItem('projects'));
+}
