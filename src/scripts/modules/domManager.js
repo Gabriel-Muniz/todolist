@@ -86,21 +86,49 @@ export function attachEventListeners() {
       const newElemText = currentStep.title;
 
       const sidebarStepUpdate = sidebar.children[projectIndex]
-      .querySelector(`[data-tk-index='${parentTaskIndex}']`)
-      .querySelector('.task-steps')
-      .children[stepIndex]
-      .querySelector('.step-title');
+        .querySelector(`[data-tk-index='${parentTaskIndex}']`)
+        .querySelector('.task-steps')
+        .children[stepIndex]
+        .querySelector('.step-title');
 
       updateElement(sidebarStepUpdate, newElemText)
-      console.log(sidebarStepUpdate);
-      
+      console.log(stepIndex);
+
     }
 
     updateLocalStorage(projects);
+  })
+
+  const stepWrappers = document.querySelectorAll('.step-wrapper');
+
+  stepWrappers.forEach(stepWrapper => {
+
+    stepWrapper.addEventListener('click', (e) => {
+
+      if (!e.target.matches('input')) return;
+
+      const projects = deserializeProjects();
+      const projectIndex = e.target.closest('[data-pj-index]').dataset.pjIndex;
+      const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
+      const stepIndex = e.target.closest('[data-st-index]').dataset.stIndex;
+
+      const currentStep = projects[projectIndex].projectTasks[taskIndex].taskSteps[stepIndex]
+
+      currentStep.changeStatus();
+
+      updateLocalStorage(projects);
+
+      if (!mainSection.querySelector(`[data-pj-index="${projectIndex}"`)) return;
+
+      const stepMainSection = mainSection.querySelector(`[data-pj-index="${projectIndex}"`)
+        .querySelector(`[data-tk-index="${taskIndex}"`)
+        .querySelector(`[data-st-index="${stepIndex}"`)
+        .querySelector('input')
+
+      updateElement(stepMainSection, currentStep.status);
 
 
-
-
+    })
   })
 
   const taskHeaders = document.querySelectorAll('.task-header')
@@ -120,10 +148,14 @@ export function cleanMainSection() {
   mainSection.innerHTML = '';
 }
 
-function updateElement(element, newText) {
+function updateElement(element, newValue) {
+  if (element.matches('input')) {
+
+    element.checked = (newValue == true) ? true : false;
+    return;
+  }
+
   if (element) {
-    element.textContent = newText;
+    element.textContent = newValue;
   }
 }
-
-console.log(getStringifiedProjects());
