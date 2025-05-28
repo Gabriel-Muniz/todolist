@@ -146,20 +146,27 @@ export function attachEventListeners() {
 
     currentStep.changeStatus();
 
+    const taskProgress = sidebar.querySelector(`[data-pj-index="${projectIndex}"`)
+      .querySelector(`[data-tk-index="${taskIndex}"`)
+      .querySelector('.task-progress');
+
+    const closestTask = projects[projectIndex].projectTasks[taskIndex];
+
+    updateElement(taskProgress, closestTask.progress);
+
     updateLocalStorage(projects);
 
     if (!mainSection.querySelector(`[data-pj-index="${projectIndex}"`)) return;
 
-
     const stepMainSection = mainSection.querySelector(`[data-pj-index="${projectIndex}"`)
       .querySelector(`[data-tk-index="${taskIndex}"`)
       .querySelector(`[data-st-index="${stepIndex}"`)
-      .querySelector('input')
+      .querySelector('input');
 
     const stepSidebar = sidebar.querySelector(`[data-pj-index="${projectIndex}"`)
-    .querySelector(`[data-tk-index="${taskIndex}"`)
-    .querySelector(`[data-st-index="${stepIndex}"`)
-    .querySelector('input');
+      .querySelector(`[data-tk-index="${taskIndex}"`)
+      .querySelector(`[data-st-index="${stepIndex}"`)
+      .querySelector('input');
 
     if (e.target.closest('.project-wrapper.main')) {
       updateElement(stepSidebar, currentStep.status);
