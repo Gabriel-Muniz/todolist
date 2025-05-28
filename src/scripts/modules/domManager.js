@@ -150,10 +150,21 @@ export function attachEventListeners() {
 
     if (!mainSection.querySelector(`[data-pj-index="${projectIndex}"`)) return;
 
+
     const stepMainSection = mainSection.querySelector(`[data-pj-index="${projectIndex}"`)
       .querySelector(`[data-tk-index="${taskIndex}"`)
       .querySelector(`[data-st-index="${stepIndex}"`)
       .querySelector('input')
+
+    const stepSidebar = sidebar.querySelector(`[data-pj-index="${projectIndex}"`)
+    .querySelector(`[data-tk-index="${taskIndex}"`)
+    .querySelector(`[data-st-index="${stepIndex}"`)
+    .querySelector('input');
+
+    if (e.target.closest('.project-wrapper.main')) {
+      updateElement(stepSidebar, currentStep.status);
+      return;
+    }
 
     updateElement(stepMainSection, currentStep.status);
 
