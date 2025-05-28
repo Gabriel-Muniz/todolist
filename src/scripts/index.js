@@ -90,5 +90,5 @@ if (storageAvailable("localStorage")) {
 
 let projects = deserializeProjects();
 renderSidebarProjects();
-attachEventListeners();
 renderProject(projects[0], 0);
+attachEventListeners();

@@ -99,36 +99,65 @@ export function attachEventListeners() {
     updateLocalStorage(projects);
   })
 
-  const stepWrappers = document.querySelectorAll('.step-wrapper');
+  // const stepWrappers = document.querySelectorAll('.step-wrapper');
 
-  stepWrappers.forEach(stepWrapper => {
+  // stepWrappers.forEach(stepWrapper => {
 
-    stepWrapper.addEventListener('click', (e) => {
+  //   stepWrapper.addEventListener('click', (e) => {
 
-      if (!e.target.matches('input')) return;
+  //     if (!e.target.matches('input')) return;
 
-      const projects = deserializeProjects();
-      const projectIndex = e.target.closest('[data-pj-index]').dataset.pjIndex;
-      const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
-      const stepIndex = e.target.closest('[data-st-index]').dataset.stIndex;
+  //     const projects = deserializeProjects();
+  //     const projectIndex = e.target.closest('[data-pj-index]').dataset.pjIndex;
+  //     const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
+  //     const stepIndex = e.target.closest('[data-st-index]').dataset.stIndex;
 
-      const currentStep = projects[projectIndex].projectTasks[taskIndex].taskSteps[stepIndex]
+  //     const currentStep = projects[projectIndex].projectTasks[taskIndex].taskSteps[stepIndex]
 
-      currentStep.changeStatus();
+  //     currentStep.changeStatus();
 
-      updateLocalStorage(projects);
+  //     updateLocalStorage(projects);
 
-      if (!mainSection.querySelector(`[data-pj-index="${projectIndex}"`)) return;
+  //     if (!mainSection.querySelector(`[data-pj-index="${projectIndex}"`)) return;
 
-      const stepMainSection = mainSection.querySelector(`[data-pj-index="${projectIndex}"`)
-        .querySelector(`[data-tk-index="${taskIndex}"`)
-        .querySelector(`[data-st-index="${stepIndex}"`)
-        .querySelector('input')
+  //     const stepMainSection = mainSection.querySelector(`[data-pj-index="${projectIndex}"`)
+  //       .querySelector(`[data-tk-index="${taskIndex}"`)
+  //       .querySelector(`[data-st-index="${stepIndex}"`)
+  //       .querySelector('input')
 
-      updateElement(stepMainSection, currentStep.status);
+  //     updateElement(stepMainSection, currentStep.status);
 
 
-    })
+  //   })
+  // })
+
+  const body = document.querySelector('body');
+
+  body.addEventListener('click', (e) => {
+
+    if (!e.target.matches('input')) return;
+
+    const projects = deserializeProjects();
+    const projectIndex = e.target.closest('[data-pj-index]').dataset.pjIndex;
+    const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
+    const stepIndex = e.target.closest('[data-st-index]').dataset.stIndex;
+
+    const currentStep = projects[projectIndex].projectTasks[taskIndex].taskSteps[stepIndex]
+
+    currentStep.changeStatus();
+
+    updateLocalStorage(projects);
+
+    if (!mainSection.querySelector(`[data-pj-index="${projectIndex}"`)) return;
+
+    const stepMainSection = mainSection.querySelector(`[data-pj-index="${projectIndex}"`)
+      .querySelector(`[data-tk-index="${taskIndex}"`)
+      .querySelector(`[data-st-index="${stepIndex}"`)
+      .querySelector('input')
+
+    updateElement(stepMainSection, currentStep.status);
+
+
   })
 
   const taskHeaders = document.querySelectorAll('.task-header')
@@ -159,3 +188,5 @@ function updateElement(element, newValue) {
     element.textContent = newValue;
   }
 }
+
+//Update status real time
