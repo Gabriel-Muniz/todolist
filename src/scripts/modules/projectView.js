@@ -46,7 +46,6 @@ export function renderProject(project, index) {
   const projectWrapper = clone.querySelector('.project-wrapper');
 
   projectWrapper.setAttribute('data-pj-index', index);
-  console.log(projectWrapper)
 
   const projectTitle = clone.querySelector('.project-title');
 
@@ -59,6 +58,8 @@ export function renderProject(project, index) {
   projectDescription.textContent = project.description;
 
   const projectTasksContainer = clone.querySelector('.project-tasks');
+
+  console.debug(project)
 
   project.projectTasks.map((currentTask, index) => {
     projectTasksContainer.append(renderTaskMain(currentTask, index))

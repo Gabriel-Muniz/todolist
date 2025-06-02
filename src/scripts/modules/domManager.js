@@ -1,5 +1,5 @@
 import { renderProject } from "./projectView";
-import { deserializeProjects, getStringifiedProjects, updateLocalStorage } from "../utils/storageManager";
+import { deserializeProjects, getStringifiedProjects, setActiveProject, updateLocalStorage } from "../utils/storageManager";
 import { de } from "date-fns/locale";
 
 const sidebar = document.querySelector('.sidebar-section');
@@ -23,6 +23,7 @@ export function attachEventListeners() {
 
       cleanMainSection();
       renderProject(currentProject, projectIndex)
+      setActiveProject(projectIndex);
     })
   })
 
@@ -96,6 +97,7 @@ export function attachEventListeners() {
 
     }
 
+    setActiveProject(projectIndex);
     updateLocalStorage(projects);
   })
 

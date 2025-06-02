@@ -8,7 +8,7 @@ import { Task } from "./models/Task";
 import { renderProject, renderSidebarProjects } from "./modules/projectView";
 import { attachEventListeners } from "./modules/domManager";
 
-import { checkLocalStorage, deserializeProjects, storageAvailable } from "./utils/storageManager";
+import { checkLocalStorage, deserializeProjects, getLastActiveProject, storageAvailable } from "./utils/storageManager";
 
 // let project1 = new Project('Projeto de estudar matemática', 'Projeto de teste. Inicializado no index.js para fins de teste.', '2025-05-08', 'high');
 
@@ -50,8 +50,8 @@ import { checkLocalStorage, deserializeProjects, storageAvailable } from "./util
 
 // projects.push(project2);
 
-export function populateStorageProjects(){
-  
+export function populateStorageProjects() {
+
 }
 
 // let stringifiedProjects = JSON.stringify(projects);
@@ -89,6 +89,15 @@ if (storageAvailable("localStorage")) {
 }
 
 let projects = deserializeProjects();
+
+
+
 renderSidebarProjects();
-renderProject(projects[0], 0);
+
 attachEventListeners();
+
+if (getLastActiveProject()) {
+  let loadedProjectIndex = getLastActiveProject();
+
+  renderProject(projects[loadedProjectIndex], loadedProjectIndex);
+}
