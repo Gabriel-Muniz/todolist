@@ -91,11 +91,11 @@ export function checkLocalStorage() {
   localStorage.setItem('projects', JSON.stringify(projects));
 }
 
-export function setActiveProject(projectIndex){
+export function setActiveProject(projectIndex) {
   localStorage.setItem('activeProjectIndex', projectIndex);
 }
 
-export function getLastActiveProject(){  
+export function getLastActiveProject() {
   return localStorage.getItem('activeProjectIndex');
 }
 
@@ -127,139 +127,18 @@ export function getStringifiedProjects() {
   return JSON.stringify(localStorage.getItem('projects'));
 }
 
-export function getRandomNewProject(){
-  const placeHolderProjects = [
-    {
-      _title: "Aprender JavaScript",
-      _description: "Estudar os fundamentos de JavaScript e praticar com pequenos projetos.",
-      _dueDate: "2025-06-15",
-      _priority: "alta",
-      _projectTasks: [
-        {
-          _title: "Ler sobre variáveis e tipos de dados",
-          _dueDate: "2025-06-10",
-          _progress: 0,
-          _taskSteps: [
-            { _title: "Variáveis var, let e const", _status: false },
-            { _title: "Tipos primitivos", _status: false }
-          ]
-        },
-        {
-          _title: "Praticar loops e condicionais",
-          _dueDate: "2025-06-12",
-          _progress: 0,
-          _taskSteps: [
-            { _title: "Escrever exemplos com for e while", _status: false },
-            { _title: "Criar exercícios com if/else", _status: false }
-          ]
-        }
-      ]
-    },
-    {
-      _title: "Organizar o escritório",
-      _description: "Melhorar o ambiente de trabalho para aumentar a produtividade.",
-      _dueDate: "2025-06-20",
-      _priority: "média",
-      _projectTasks: [
-        {
-          _title: "Limpar a mesa",
-          _dueDate: "2025-06-18",
-          _progress: 0,
-          _taskSteps: [
-            { _title: "Remover objetos desnecessários", _status: false },
-            { _title: "Limpar a superfície com pano úmido", _status: false }
-          ]
-        },
-        {
-          _title: "Organizar cabos",
-          _dueDate: "2025-06-19",
-          _progress: 0,
-          _taskSteps: [
-            { _title: "Separar cabos por tipo", _status: false },
-            { _title: "Utilizar organizadores de cabos", _status: false }
-          ]
-        }
-      ]
-    },
-    {
-      _title: "Planejar viagem de férias",
-      _description: "Organizar todos os detalhes para as próximas férias.",
-      _dueDate: "2025-07-01",
-      _priority: "alta",
-      _projectTasks: [
-        {
-          _title: "Escolher destino",
-          _dueDate: "2025-06-25",
-          _progress: 0,
-          _taskSteps: [
-            { _title: "Pesquisar opções de destinos", _status: false },
-            { _title: "Comparar custos e atrações", _status: false }
-          ]
-        },
-        {
-          _title: "Reservar hospedagem",
-          _dueDate: "2025-06-27",
-          _progress: 0,
-          _taskSteps: [
-            { _title: "Procurar hotéis ou apartamentos", _status: false },
-            { _title: "Fazer reserva online", _status: false }
-          ]
-        }
-      ]
-    },
-    {
-      _title: "Desenvolver aplicativo pessoal",
-      _description: "Criar um aplicativo para gerenciamento de tarefas pessoais.",
-      _dueDate: "2025-08-15",
-      _priority: "alta",
-      _projectTasks: [
-        {
-          _title: "Definir funcionalidades principais",
-          _dueDate: "2025-07-10",
-          _progress: 0,
-          _taskSteps: [
-            { _title: "Listar requisitos do aplicativo", _status: false },
-            { _title: "Criar wireframes das telas", _status: false }
-          ]
-        },
-        {
-          _title: "Implementar backend",
-          _dueDate: "2025-07-25",
-          _progress: 0,
-          _taskSteps: [
-            { _title: "Configurar servidor e banco de dados", _status: false },
-            { _title: "Desenvolver API REST", _status: false }
-          ]
-        }
-      ]
-    },
-    {
-      _title: "Curso de fotografia",
-      _description: "Participar de um curso para melhorar habilidades fotográficas.",
-      _dueDate: "2025-09-01",
-      _priority: "média",
-      _projectTasks: [
-        {
-          _title: "Aulas teóricas",
-          _dueDate: "2025-08-15",
-          _progress: 0,
-          _taskSteps: [
-            { _title: "Estudar composição e iluminação", _status: false },
-            { _title: "Aprender sobre configurações da câmera", _status: false }
-          ]
-        },
-        {
-          _title: "Práticas fotográficas",
-          _dueDate: "2025-08-25",
-          _progress: 0,
-          _taskSteps: [
-            { _title: "Sessão de fotos ao ar livre", _status: false },
-            { _title: "Análise e edição das fotos", _status: false }
-          ]
-        }
-      ]
-    }
-  ];
-  
-  return placeHolderProjects[Math.floor(Math.random() * 4)];
+export function getNewObject(type) {
+
+  let auxProject = new Project('New project', 'New project for demonstration topics', '2025-12-31', 'medium');
+
+  let auxTask = new Task('New task', '2025-12-30');
+
+  let auxStep = new Step('New step')
+
+  auxProject.addTask(auxTask);
+  auxTask.addStep(auxStep);
+
+  if(type === 'project') return auxProject;
+  if(type === 'task') return auxTask;
+  if(type === 'step') return auxStep;
 }

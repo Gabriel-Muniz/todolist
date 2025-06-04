@@ -1,5 +1,5 @@
 import { renderProject, renderSidebarProjects } from "./projectView";
-import { deserializeProjects, getRandomNewProject, getStringifiedProjects, setActiveProject, updateLocalStorage } from "../utils/storageManager";
+import { deserializeProjects, getNewObject, getStringifiedProjects, setActiveProject, updateLocalStorage } from "../utils/storageManager";
 import { de } from "date-fns/locale";
 
 const sidebar = document.querySelector('.sidebar-section');
@@ -32,7 +32,7 @@ export function attachEventListeners() {
     }
 
     if (e.target.closest('.add-project')) {
-      const aux = getRandomNewProject();
+      const aux = getNewObject('project');
 
       const projects = deserializeProjects();
 
@@ -41,6 +41,40 @@ export function attachEventListeners() {
       updateLocalStorage(projects);
       renderSidebarProjects();
     }
+
+    if (e.target.closest('.add-task')) {
+      const aux = getNewObject('task');
+
+      const projects = deserializeProjects();
+
+      const projectIndex = e.target.closest('.project-wrapper').dataset.pjIndex;
+      let currentProject = projects[projectIndex];
+
+      currentProject.addTask(aux);
+      console.log(currentProject)
+
+      updateLocalStorage(projects);
+      renderSidebarProjects();
+    }
+
+    if (e.target.closest('.add-step')) {
+      const aux = getNewObject('step');
+
+      const projects = deserializeProjects();
+
+      const projectIndex = e.target.closest('.project-wrapper').dataset.pjIndex;
+      const taskIndex = e.target.closest('.task-wrapper').dataset.tkIndex;
+
+      let currentTask = projects[projectIndex]
+        .projectTasks[taskIndex]
+        .taskSteps;
+
+      currentTask.push(aux);
+
+      updateLocalStorage(projects);
+      renderSidebarProjects();
+    }
+
   })
 
   mainSection.addEventListener('keyup', (e) => {

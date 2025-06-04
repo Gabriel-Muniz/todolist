@@ -1,5 +1,13 @@
 import { renderStep } from "./stepView";
 
+function renderNewTaskButton(){
+  const btnAddTask = document.createElement('div');
+  btnAddTask.classList.add('add-task');
+  btnAddTask.textContent = '+';
+
+  return btnAddTask;
+}
+
 export function renderTaskSidebar(task, index) {
   const template = document.getElementById('task-template-sidebar');
 
@@ -39,6 +47,8 @@ export function renderTaskMain(task, index){
   taskWrapper.setAttribute('data-tk-index', index);
 
   const taskSteps = clone.querySelector('.task-steps');
+
+  console.log(task)
 
   task.taskSteps.map((currentStep, stepIndex) => {
     //Parameters(Step, StepIndex, InMainSection)
