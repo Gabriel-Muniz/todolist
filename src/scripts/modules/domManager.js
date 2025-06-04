@@ -1,5 +1,5 @@
-import { renderProject } from "./projectView";
-import { deserializeProjects, getStringifiedProjects, setActiveProject, updateLocalStorage } from "../utils/storageManager";
+import { renderProject, renderSidebarProjects } from "./projectView";
+import { deserializeProjects, getRandomNewProject, getStringifiedProjects, setActiveProject, updateLocalStorage } from "../utils/storageManager";
 import { de } from "date-fns/locale";
 
 const sidebar = document.querySelector('.sidebar-section');
@@ -7,11 +7,10 @@ const mainSection = document.querySelector('.main-section');
 
 export function attachEventListeners() {
 
-  const projectHeaders = document.querySelectorAll('.project-header');
+  sidebar.addEventListener('click', (e) => {
+    if (e.target.closest('.project-header')) {
 
-  projectHeaders.forEach(project => {
-    project.addEventListener('click', (e) => {
-      const parent = e.currentTarget.parentNode; //Project-Wrapper
+      const parent = e.target.closest('.project-header').parentNode; //Project-Wrapper
       const projectBody = parent.querySelector('.project-body');
 
       const projectIndex = parent.dataset.pjIndex;
@@ -20,11 +19,28 @@ export function attachEventListeners() {
 
       projectBody.classList.toggle('hidden');
 
-
       cleanMainSection();
       renderProject(currentProject, projectIndex)
       setActiveProject(projectIndex);
-    })
+    }
+
+    if (e.target.closest('.task-header')) {
+      const parent = e.target.closest('.task-header').parentNode; //Task-Wrapper
+      const taskBody = parent.querySelector('.task-body');
+
+      taskBody.classList.toggle('hidden');
+    }
+
+    if (e.target.closest('.add-project')) {
+      const aux = getRandomNewProject();
+
+      const projects = deserializeProjects();
+
+      projects.push(aux);
+
+      updateLocalStorage(projects);
+      renderSidebarProjects();
+    }
   })
 
   mainSection.addEventListener('keyup', (e) => {
@@ -46,7 +62,8 @@ export function attachEventListeners() {
       const newElemText = currentProject[`${inputField.dataset.input}`];
 
       //Get sidebar project element to update
-      const sidebarElemUpdate = sidebar.children[projectIndex].querySelector(`.project-${inputField.dataset.input}`);
+      const sidebarElemUpdate = sidebar.children[Number(projectIndex) + 1] // +1 to account the add project button
+        .querySelector(`.project-${inputField.dataset.input}`);
 
       updateElement(sidebarElemUpdate, newElemText);
 
@@ -62,7 +79,7 @@ export function attachEventListeners() {
 
       const newElemText = currentTask[inputField.dataset.input];
 
-      const sidebarTaskUpdate = sidebar.children[projectIndex]
+      const sidebarTaskUpdate = sidebar.children[Number(projectIndex) + 1] // +1 to account the add project button
         .querySelector(`[data-tk-index='${taskIndex}']`)
         .querySelector('.task-title');
 
@@ -86,7 +103,7 @@ export function attachEventListeners() {
 
       const newElemText = currentStep.title;
 
-      const sidebarStepUpdate = sidebar.children[projectIndex]
+      const sidebarStepUpdate = sidebar.children[Number(projectIndex) + 1] // +1 to account the add project button
         .querySelector(`[data-tk-index='${parentTaskIndex}']`)
         .querySelector('.task-steps')
         .children[stepIndex]
@@ -178,18 +195,6 @@ export function attachEventListeners() {
     updateElement(stepMainSection, currentStep.status);
 
 
-  })
-
-  const taskHeaders = document.querySelectorAll('.task-header')
-
-  taskHeaders.forEach(task => {
-    task.addEventListener('click', (e) => {
-      const parent = e.currentTarget.parentNode; //Task-Wrapper
-      const taskBody = parent.querySelector('.task-body');
-
-      taskBody.classList.toggle('hidden');
-
-    })
   })
 }
 

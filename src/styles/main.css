@@ -21,7 +21,8 @@ body {
 
   flex: 3;
 }
-.project-wrapper.sidebar {
+.project-wrapper.sidebar,
+.add-project {
   width: 80%;
   border: 1px solid black;
   border-radius: 8px;
@@ -74,4 +75,10 @@ ul {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px dotted black;
+}
+.add-project {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
 }

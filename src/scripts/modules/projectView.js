@@ -11,6 +11,12 @@ export function renderSidebarProjects() {
 
   sidebar.innerHTML = ''
 
+  const btnAddProject = document.createElement('div');
+  btnAddProject.classList.add('add-project');
+  btnAddProject.textContent = '+';
+
+  sidebar.append(btnAddProject);
+
   projects.map((project, index) => {
 
     const clone = template.content.cloneNode(true);
