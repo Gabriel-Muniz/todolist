@@ -8,73 +8,59 @@ const mainSection = document.querySelector('.main-section');
 export function attachEventListeners() {
 
   sidebar.addEventListener('click', (e) => {
-    if (e.target.closest('.project-header')) {
 
-      const parent = e.target.closest('.project-header').parentNode; //Project-Wrapper
-      const projectBody = parent.querySelector('.project-body');
+    const projects = deserializeProjects();
 
-      const projectIndex = parent.dataset.pjIndex;
+    if (!e.target.closest('.add-project')) {
 
-      const currentProject = deserializeProjects()[projectIndex];
+      const projectWrapper = e.target.closest('.project-wrapper');
 
-      projectBody.classList.toggle('hidden');
+      if (!projectWrapper) return;
 
-      cleanMainSection();
-      renderProject(currentProject, projectIndex)
-      setActiveProject(projectIndex);
-    }
+      const projectIndex = projectWrapper.dataset.pjIndex;
 
-    if (e.target.closest('.task-header')) {
-      const parent = e.target.closest('.task-header').parentNode; //Task-Wrapper
-      const taskBody = parent.querySelector('.task-body');
+      const currentProject = projects[projectIndex];
 
-      taskBody.classList.toggle('hidden');
+      if (e.target.closest('.project-header')) {
+        const projectBody = projectWrapper.querySelector('.project-body');
+
+        projectBody.classList.toggle('hidden');
+
+        cleanMainSection();
+        renderProject(currentProject, projectIndex)
+        setActiveProject(projectIndex);
+        return;
+      }
+
+      if (e.target.closest('.task-header')) {
+        const taskWrapper = e.target.closest('.task-header').parentNode;
+        const taskBody = taskWrapper.querySelector('.task-body');
+
+        taskBody.classList.toggle('hidden');
+        return;
+      }
+
+      if (e.target.closest('.add-task')) {
+        currentProject.addTask(getNewObject('task'));
+      }
+
+      if (e.target.closest('.add-step')) {
+        const taskIndex = e.target.closest('.task-wrapper').dataset.tkIndex;
+
+        let currentTask = projects[projectIndex]
+          .projectTasks[taskIndex]
+          .taskSteps;
+
+        currentTask.push(getNewObject('step'));
+      }
     }
 
     if (e.target.closest('.add-project')) {
-      const aux = getNewObject('project');
-
-      const projects = deserializeProjects();
-
-      projects.push(aux);
-
-      updateLocalStorage(projects);
-      renderSidebarProjects();
+      projects.push(getNewObject('project'));
     }
 
-    if (e.target.closest('.add-task')) {
-      const aux = getNewObject('task');
-
-      const projects = deserializeProjects();
-
-      const projectIndex = e.target.closest('.project-wrapper').dataset.pjIndex;
-      let currentProject = projects[projectIndex];
-
-      currentProject.addTask(aux);
-      console.log(currentProject)
-
-      updateLocalStorage(projects);
-      renderSidebarProjects();
-    }
-
-    if (e.target.closest('.add-step')) {
-      const aux = getNewObject('step');
-
-      const projects = deserializeProjects();
-
-      const projectIndex = e.target.closest('.project-wrapper').dataset.pjIndex;
-      const taskIndex = e.target.closest('.task-wrapper').dataset.tkIndex;
-
-      let currentTask = projects[projectIndex]
-        .projectTasks[taskIndex]
-        .taskSteps;
-
-      currentTask.push(aux);
-
-      updateLocalStorage(projects);
-      renderSidebarProjects();
-    }
-
+    updateLocalStorage(projects);
+    renderSidebarProjects();
   })
 
   mainSection.addEventListener('keyup', (e) => {

@@ -48,7 +48,7 @@ export function renderTaskMain(task, index){
 
   const taskSteps = clone.querySelector('.task-steps');
 
-  console.log(task)
+  // console.log(task)
 
   task.taskSteps.map((currentStep, stepIndex) => {
     //Parameters(Step, StepIndex, InMainSection)

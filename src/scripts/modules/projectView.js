@@ -65,7 +65,7 @@ export function renderProject(project, index) {
 
   const projectTasksContainer = clone.querySelector('.project-tasks');
 
-  console.debug(project)
+  // console.debug(project)
 
   project.projectTasks.map((currentTask, index) => {
     projectTasksContainer.append(renderTaskMain(currentTask, index))
