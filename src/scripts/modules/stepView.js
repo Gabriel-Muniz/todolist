@@ -12,9 +12,14 @@ export function renderStep(step, index, inMainSection = false) {
 
   stepWrapper.setAttribute('data-st-index', index);
   if (inMainSection) {
+    const btnDelete = document.createElement('button');
+    btnDelete.classList.add('btn-delete-step')
+    btnDelete.textContent = 'X'
+
     stepTitle.setAttribute('contenteditable', 'true');
     stepTitle.setAttribute('data-type', 'inStep');
     stepTitle.setAttribute('data-input', 'title');
+    stepWrapper.append(btnDelete)
   }
 
   stepStatus.checked = (step.status == true) ? true : false;

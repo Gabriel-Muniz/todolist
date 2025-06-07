@@ -174,14 +174,41 @@ export function attachEventListeners() {
 
   body.addEventListener('click', (e) => {
 
-    if (!e.target.matches('input')) return;
+    if (!e.target.closest('.project-wrapper.main')) return;
 
     const projects = deserializeProjects();
     const projectIndex = e.target.closest('[data-pj-index]').dataset.pjIndex;
-    const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
-    const stepIndex = e.target.closest('[data-st-index]').dataset.stIndex;
+    const currentProject = projects[projectIndex];
 
-    const currentStep = projects[projectIndex].projectTasks[taskIndex].taskSteps[stepIndex]
+    let taskIndex = null;
+    let currentTask = null;
+    let stepIndex = null;
+    let currentStep = null;
+
+    if (e.target.closest('.task-wrapper.main')) {
+      console.log(projectIndex);
+      
+      taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
+      currentTask = currentProject.projectTasks[taskIndex];
+    }
+
+    if (e.target.closest('.step-wrapper')) {
+      stepIndex = e.target.closest('[data-st-index]').dataset.stIndex;
+      currentStep = currentTask.taskSteps[stepIndex];
+    }
+
+    if (e.target.closest('.btn-delete-step')) {
+      currentTask.removeStep(stepIndex);
+
+      cleanMainSection();
+      renderProject(currentProject, projectIndex)
+    }
+
+    updateLocalStorage(projects);
+    renderSidebarProjects();
+
+
+    if (!e.target.matches('input')) return;
 
     currentStep.changeStatus();
 
@@ -192,8 +219,6 @@ export function attachEventListeners() {
     const closestTask = projects[projectIndex].projectTasks[taskIndex];
 
     updateElement(taskProgress, closestTask.progress);
-
-    updateLocalStorage(projects);
 
     if (!mainSection.querySelector(`[data-pj-index="${projectIndex}"`)) return;
 
@@ -213,6 +238,8 @@ export function attachEventListeners() {
     }
 
     updateElement(stepMainSection, currentStep.status);
+
+    updateLocalStorage(projects);
 
 
   })
