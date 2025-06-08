@@ -187,7 +187,7 @@ export function attachEventListeners() {
 
     if (e.target.closest('.task-wrapper.main')) {
       console.log(projectIndex);
-      
+
       taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
       currentTask = currentProject.projectTasks[taskIndex];
     }
@@ -197,6 +197,12 @@ export function attachEventListeners() {
       currentStep = currentTask.taskSteps[stepIndex];
     }
 
+    if (e.target.matches('.btn-delete-task')) {
+      currentProject.removeTask(taskIndex);
+      cleanMainSection();
+      renderProject(currentProject, projectIndex)
+    }
+    
     if (e.target.closest('.btn-delete-step')) {
       currentTask.removeStep(stepIndex);
 
