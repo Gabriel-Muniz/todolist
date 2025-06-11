@@ -111,10 +111,12 @@ export function attachEventListeners() {
     let currentStep = (stepIndex) ? currentTask.taskSteps[stepIndex] : null;
 
 
-    if (e.target.closest('.add-task')) currentProject.addTask(getNewObject('task')); objectAdded = true;
-    if (e.target.closest('.add-step')) currentTask.addStep(getNewObject('step')); objectAdded = true;
+    if (e.target.closest('.add-task')) { currentProject.addTask(getNewObject('task')); objectAdded = true; }
+    if (e.target.closest('.add-step')) { currentTask.addStep(getNewObject('step')); objectAdded = true; }
 
     if (objectAdded) {
+      console.log(objectAdded);
+
       cleanMainSection();
       renderProject(currentProject, projectIndex);
     }
