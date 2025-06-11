@@ -1,5 +1,5 @@
 export function renderStep(step, index, inMainSection = false) {
-  const template = document.querySelector('#step-template-sidebar');
+  const template = document.querySelector('#step-template');
 
   const clone = template.content.cloneNode(true);
 
@@ -13,7 +13,8 @@ export function renderStep(step, index, inMainSection = false) {
   stepWrapper.setAttribute('data-st-index', index);
   if (inMainSection) {
     const btnDelete = document.createElement('button');
-    btnDelete.classList.add('btn-delete-step')
+    btnDelete.classList.add('btn-step');
+    btnDelete.classList.add('delete');
     btnDelete.textContent = 'X'
 
     stepTitle.setAttribute('contenteditable', 'true');

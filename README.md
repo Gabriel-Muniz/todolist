@@ -32,3 +32,11 @@ changeStatus()
 - [Deserialization](https://javascript.info/json#using-reviver)
 - Two way binding
 - [date-fns](https://github.com/date-fns/date-fns)
+
+## to-do
+
+Work on sidebar and mainSection desync
+
+- Problably need to apply eventListeners to the window and not the body/sidebar
+
+---> WORK ON MAINSECTION CLICK EVENT LISTENERS! <---

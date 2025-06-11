@@ -7,62 +7,6 @@ const mainSection = document.querySelector('.main-section');
 
 export function attachEventListeners() {
 
-  sidebar.addEventListener('click', (e) => {
-
-    const projects = deserializeProjects();
-
-    if (!e.target.closest('.add-project')) {
-
-      const projectWrapper = e.target.closest('.project-wrapper');
-
-      if (!projectWrapper) return;
-
-      const projectIndex = projectWrapper.dataset.pjIndex;
-
-      const currentProject = projects[projectIndex];
-
-      if (e.target.closest('.project-header')) {
-        const projectBody = projectWrapper.querySelector('.project-body');
-
-        projectBody.classList.toggle('hidden');
-
-        cleanMainSection();
-        renderProject(currentProject, projectIndex)
-        setActiveProject(projectIndex);
-        return;
-      }
-
-      if (e.target.closest('.task-header')) {
-        const taskWrapper = e.target.closest('.task-header').parentNode;
-        const taskBody = taskWrapper.querySelector('.task-body');
-
-        taskBody.classList.toggle('hidden');
-        return;
-      }
-
-      if (e.target.closest('.add-task')) {
-        currentProject.addTask(getNewObject('task'));
-      }
-
-      if (e.target.closest('.add-step')) {
-        const taskIndex = e.target.closest('.task-wrapper').dataset.tkIndex;
-
-        let currentTask = projects[projectIndex]
-          .projectTasks[taskIndex]
-          .taskSteps;
-
-        currentTask.push(getNewObject('step'));
-      }
-    }
-
-    if (e.target.closest('.add-project')) {
-      projects.push(getNewObject('project'));
-    }
-
-    updateLocalStorage(projects);
-    renderSidebarProjects();
-  })
-
   mainSection.addEventListener('keyup', (e) => {
     const inEdit = e.currentTarget;
     const projectWrapper = inEdit.querySelector('.project-wrapper');
@@ -136,117 +80,98 @@ export function attachEventListeners() {
 
     setActiveProject(projectIndex);
     updateLocalStorage(projects);
-  })
+  });
 
-  // const stepWrappers = document.querySelectorAll('.step-wrapper');
-
-  // stepWrappers.forEach(stepWrapper => {
-
-  //   stepWrapper.addEventListener('click', (e) => {
-
-  //     if (!e.target.matches('input')) return;
-
-  //     const projects = deserializeProjects();
-  //     const projectIndex = e.target.closest('[data-pj-index]').dataset.pjIndex;
-  //     const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
-  //     const stepIndex = e.target.closest('[data-st-index]').dataset.stIndex;
-
-  //     const currentStep = projects[projectIndex].projectTasks[taskIndex].taskSteps[stepIndex]
-
-  //     currentStep.changeStatus();
-
-  //     updateLocalStorage(projects);
-
-  //     if (!mainSection.querySelector(`[data-pj-index="${projectIndex}"`)) return;
-
-  //     const stepMainSection = mainSection.querySelector(`[data-pj-index="${projectIndex}"`)
-  //       .querySelector(`[data-tk-index="${taskIndex}"`)
-  //       .querySelector(`[data-st-index="${stepIndex}"`)
-  //       .querySelector('input')
-
-  //     updateElement(stepMainSection, currentStep.status);
-
-
-  //   })
-  // })
-
-  const body = document.querySelector('body');
+  const body = document.querySelector('.body');
 
   body.addEventListener('click', (e) => {
 
-    if (!e.target.closest('.project-wrapper.main')) return;
-
     const projects = deserializeProjects();
-    const projectIndex = e.target.closest('[data-pj-index]').dataset.pjIndex;
-    const currentProject = projects[projectIndex];
 
-    let taskIndex = null;
-    let currentTask = null;
-    let stepIndex = null;
-    let currentStep = null;
+    if (!e.target.closest('.project-wrapper') && !e.target.closest('.add-project')) return;
 
-    if (e.target.closest('.task-wrapper.main')) {
-      console.log(projectIndex);
+    let objectAdded = false;
 
-      taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
-      currentTask = currentProject.projectTasks[taskIndex];
-    }
+    if (e.target.closest('.add-project')) {
+      projects.push(getNewObject('project'));
 
-    if (e.target.closest('.step-wrapper')) {
-      stepIndex = e.target.closest('[data-st-index]').dataset.stIndex;
-      currentStep = currentTask.taskSteps[stepIndex];
-    }
-
-    if (e.target.matches('.btn-delete-task')) {
-      currentProject.removeTask(taskIndex);
-      cleanMainSection();
-      renderProject(currentProject, projectIndex)
-    }
-    
-    if (e.target.closest('.btn-delete-step')) {
-      currentTask.removeStep(stepIndex);
-
-      cleanMainSection();
-      renderProject(currentProject, projectIndex)
-    }
-
-    updateLocalStorage(projects);
-    renderSidebarProjects();
-
-
-    if (!e.target.matches('input')) return;
-
-    currentStep.changeStatus();
-
-    const taskProgress = sidebar.querySelector(`[data-pj-index="${projectIndex}"`)
-      .querySelector(`[data-tk-index="${taskIndex}"`)
-      .querySelector('.task-progress');
-
-    const closestTask = projects[projectIndex].projectTasks[taskIndex];
-
-    updateElement(taskProgress, closestTask.progress);
-
-    if (!mainSection.querySelector(`[data-pj-index="${projectIndex}"`)) return;
-
-    const stepMainSection = mainSection.querySelector(`[data-pj-index="${projectIndex}"`)
-      .querySelector(`[data-tk-index="${taskIndex}"`)
-      .querySelector(`[data-st-index="${stepIndex}"`)
-      .querySelector('input');
-
-    const stepSidebar = sidebar.querySelector(`[data-pj-index="${projectIndex}"`)
-      .querySelector(`[data-tk-index="${taskIndex}"`)
-      .querySelector(`[data-st-index="${stepIndex}"`)
-      .querySelector('input');
-
-    if (e.target.closest('.project-wrapper.main')) {
-      updateElement(stepSidebar, currentStep.status);
+      updateLocalStorage(projects);
+      renderSidebarProjects();
       return;
     }
 
-    updateElement(stepMainSection, currentStep.status);
 
+    const projectIndex = (e.target.closest('.project-wrapper')) ? e.target.closest('[data-pj-index]').dataset.pjIndex : null;
+    let currentProject = (projectIndex) ? projects[projectIndex] : null;
+
+    const taskIndex = (e.target.closest('.task-wrapper')) ? e.target.closest('[data-tk-index]').dataset.tkIndex : null;
+    let currentTask = (taskIndex) ? currentProject.projectTasks[taskIndex] : null;
+
+    const stepIndex = (e.target.closest('.step-wrapper')) ? e.target.closest('[data-st-index]').dataset.stIndex : null;
+    let currentStep = (stepIndex) ? currentTask.taskSteps[stepIndex] : null;
+
+
+    if (e.target.closest('.add-task')) currentProject.addTask(getNewObject('task')); objectAdded = true;
+    if (e.target.closest('.add-step')) currentTask.addStep(getNewObject('step')); objectAdded = true;
+
+    if (objectAdded) {
+      cleanMainSection();
+      renderProject(currentProject, projectIndex);
+    }
+
+
+    if (e.target.closest('.sidebar-section')) {
+
+      if (e.target.closest('.project-header')) {
+        const projectBody = e.target.closest('.project-wrapper').querySelector('.project-body');
+        projectBody.classList.toggle('hidden');
+
+        const projectIndex = e.target.closest('[data-pj-index]').dataset.pjIndex;
+
+        cleanMainSection();
+        renderProject(currentProject, projectIndex)
+        setActiveProject(projectIndex);
+
+        return;
+      }
+
+      if (e.target.closest('.task-header')) {
+        const taskBody = e.target.closest('.task-wrapper').querySelector('.task-body');
+        taskBody.classList.toggle('hidden');
+
+        return
+      }
+    }
+
+    if (e.target.closest('input')) {
+      currentStep.changeStatus();
+
+      const sidebarProject = sidebar.children[Number(projectIndex) + 1].dataset.pjIndex;
+      const mainSectionProject = mainSection.querySelector('.project-wrapper').dataset.pjIndex;
+
+      const stepMainSection = document.querySelector('.project-wrapper.main')
+        .querySelector(`[data-tk-index="${taskIndex}"]`)
+        .querySelector(`[data-st-index="${stepIndex}"]`);
+
+      if (sidebarProject == mainSectionProject) {
+        updateElement(stepMainSection.querySelector('input'), currentStep.status);
+      }
+    }
+
+    if (e.target.closest('.delete')) {
+      const btnDelete = e.target.closest('.delete');
+      if (btnDelete.classList.contains('btn-task')) {
+        currentProject.removeTask(taskIndex);
+      }
+      if (btnDelete.classList.contains('btn-step')) {
+        currentTask.removeStep(stepIndex);
+      }
+
+      cleanMainSection();
+      renderProject(currentProject, projectIndex);
+    }
     updateLocalStorage(projects);
-
+    renderSidebarProjects();
 
   })
 }
