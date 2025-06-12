@@ -69,7 +69,7 @@ ul {
 }
 .project-header.main {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 3fr 1fr 1fr;
 }
 .task-header.main {
   display: flex;

@@ -162,12 +162,24 @@ export function attachEventListeners() {
 
     if (e.target.closest('.delete')) {
       const btnDelete = e.target.closest('.delete');
+
+      if (btnDelete.classList.contains('btn-project')) {
+        projects.splice(projectIndex, 1);
+
+        cleanMainSection();
+        updateLocalStorage(projects);
+        renderSidebarProjects();
+
+        return
+      }
+
       if (btnDelete.classList.contains('btn-task')) {
         currentProject.removeTask(taskIndex);
       }
       if (btnDelete.classList.contains('btn-step')) {
         currentTask.removeStep(stepIndex);
       }
+
 
       cleanMainSection();
       renderProject(currentProject, projectIndex);
