@@ -8,6 +8,26 @@ const mainSection = document.querySelector('.main-section');
 
 export function attachEventListeners() {
 
+  mainSection.addEventListener('focusout', (e) => {
+    if (!e.target.closest('.inYear')) return;
+
+    const projects = deserializeProjects();
+    const projectIndex = e.target.closest('.project-wrapper').dataset.pjIndex;
+    const currentProject = projects[projectIndex];
+
+    const inYear = document.querySelector('.inYear');
+
+    if (inYear.value.length < 4) {
+      inYear.value = new Date().getFullYear();
+      const auxDate = new Date(currentProject.dueDate);
+      auxDate.setFullYear(inYear.value);
+      currentProject.dueDate = auxDate;
+    }
+
+    updateLocalStorage(projects);
+    renderSidebarProjects();
+  })
+
   mainSection.addEventListener('keydown', (e) => {
 
     if (!e.target.closest('[inputmode="numeric"]')) return;
@@ -15,9 +35,6 @@ export function attachEventListeners() {
     const projects = deserializeProjects();
     const projectIndex = e.target.closest('.project-wrapper').dataset.pjIndex;
     const currentProject = projects[projectIndex];
-
-    console.log(projectIndex);
-
 
     const allowedKeys = [
       "Backspace",
@@ -49,6 +66,12 @@ export function attachEventListeners() {
       const maxDay = getMaxDay(+inMonth.value, inYear.value);
       if (inDay.value > maxDay) {
         inDay.value = maxDay;
+      }
+
+      const currentYear = new Date().getFullYear()
+
+      if (inYear.value < currentYear - 100 && inYear.value.length === 4) {
+        inYear.value = currentYear - 100;
       }
 
       const date = new Date(inYear.value, inMonth.value - 1, inDay.value);

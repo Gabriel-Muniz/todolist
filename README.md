@@ -39,4 +39,4 @@ Work on sidebar and mainSection desync
 
 - Problably need to apply eventListeners to the window and not the body/sidebar
 
----> WORK ON MAINSECTION CLICK EVENT LISTENERS! <---
+# ---> REFAC DUEDATE ON TASKS <---
