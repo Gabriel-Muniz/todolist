@@ -88,3 +88,16 @@ ul {
 .add-step {
   border: 1px dashed black;
 }
+.inDay,
+.inMonth {
+  width: 4ch;
+}
+.inYear {
+  width: 8ch;
+}
+.inDay,
+.inMonth,
+.inYear {
+  border: 0px;
+  background-color: #0000;
+}

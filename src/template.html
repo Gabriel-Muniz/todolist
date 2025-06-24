@@ -56,14 +56,35 @@
         >
           Placeholder Title Main
         </div>
-        <div
+        <span
           class="project-dueDate main"
-          contenteditable="true"
           data-type="inProject"
           data-input="dueDate"
         >
-          SaveTheDate
-        </div>
+          <input
+            class="inDay"
+            type="text"
+            inputmode="numeric"
+            maxlength="2"
+            placeholder="dd"
+          />
+          /
+          <input
+            class="inMonth"
+            type="text"
+            inputmode="numeric"
+            maxlength="2"
+            placeholder="mm"
+          />
+          /
+          <input
+            class="inYear"
+            type="text"
+            inputmode="numeric"
+            maxlength="4"
+            placeholder="yyyy"
+          />
+        </span>
         <button class="btn-project delete">X</button>
         <div
           class="project-description main"

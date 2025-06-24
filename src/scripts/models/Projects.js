@@ -26,7 +26,7 @@ export class Project {
   }
 
   get dueDate() {
-    return format(this._dueDate, 'dd/MM/yyyy');
+    return this._dueDate;
   }
 
   set dueDate(newDueDate) {

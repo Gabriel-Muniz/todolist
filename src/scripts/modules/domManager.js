@@ -1,11 +1,66 @@
 import { renderProject, renderSidebarProjects } from "./projectView";
 import { deserializeProjects, getNewObject, getStringifiedProjects, setActiveProject, updateLocalStorage } from "../utils/storageManager";
-import { de } from "date-fns/locale";
+import { format, isValid } from "date-fns";
+import { getMaxDay } from "../utils/dateHelper";
 
 const sidebar = document.querySelector('.sidebar-section');
 const mainSection = document.querySelector('.main-section');
 
 export function attachEventListeners() {
+
+  mainSection.addEventListener('keydown', (e) => {
+
+    if (!e.target.closest('[inputmode="numeric"]')) return;
+
+    const projects = deserializeProjects();
+    const projectIndex = e.target.closest('.project-wrapper').dataset.pjIndex;
+    const currentProject = projects[projectIndex];
+
+    console.log(projectIndex);
+
+
+    const allowedKeys = [
+      "Backspace",
+      "Delete",
+      "ArrowLeft",
+      "ArrowRight",
+      "ArrowUp",
+      "ArrowDown",
+      "Tab",
+    ];
+
+    if (!allowedKeys.includes(e.key) && !e.key.match(new RegExp(/[0-9]/))) {
+      e.preventDefault();
+      return;
+    }
+
+    const inDay = document.querySelector('.inDay');
+    const inMonth = document.querySelector('.inMonth');
+    const inYear = document.querySelector('.inYear');
+
+    setTimeout(() => {
+      if (inMonth.value > 12) {
+        inMonth.value = 12;
+      }
+      if (inMonth.value === '00') {
+        inMonth.value = '01';
+      }
+
+      const maxDay = getMaxDay(+inMonth.value, inYear.value);
+      if (inDay.value > maxDay) {
+        inDay.value = maxDay;
+      }
+
+      const date = new Date(inYear.value, inMonth.value - 1, inDay.value);
+
+      currentProject.dueDate = date;
+      console.log(date)
+
+      updateLocalStorage(projects);
+      renderSidebarProjects();
+    }, 10);
+
+  })
 
   mainSection.addEventListener('keyup', (e) => {
     const inEdit = e.currentTarget;
@@ -21,8 +76,20 @@ export function attachEventListeners() {
 
     if (inputField.dataset.type == 'inProject') {
 
-      currentProject[`${inputField.dataset.input}`] = inputField.textContent;
+      console.log(inputField);
 
+      if (inputField.dataset.input == 'description') {
+        currentProject[`${inputField.dataset.input}`] = inputField.textContent;
+
+        updateLocalStorage(projects)
+        return;
+      }
+
+      if (!inputField.dataset.input == 'dueDate') {
+
+        currentProject[`${inputField.dataset.input}`] = inputField.textContent;
+
+      }
       const newElemText = currentProject[`${inputField.dataset.input}`];
 
       //Get sidebar project element to update
@@ -145,7 +212,7 @@ export function attachEventListeners() {
       }
     }
 
-    if (e.target.closest('input')) {
+    if (e.target.closest('input[type="checkbox"]')) {
       currentStep.changeStatus();
 
       const sidebarProject = sidebar.children[Number(projectIndex) + 1].dataset.pjIndex;
@@ -200,6 +267,12 @@ function updateElement(element, newValue) {
     element.checked = (newValue == true) ? true : false;
     return;
   }
+
+  if (element.classList.contains('project-dueDate')) {
+    element.textContent = format(newValue, 'dd/MM/yyyy');
+    return;
+  }
+
 
   if (element) {
     element.textContent = newValue;
