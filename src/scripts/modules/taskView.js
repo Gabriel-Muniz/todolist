@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { renderStep } from "./stepView";
 
-function renderNewTaskButton(){
+function renderNewTaskButton() {
   const btnAddTask = document.createElement('div');
   btnAddTask.classList.add('add-task');
   btnAddTask.textContent = '+';
@@ -32,7 +32,7 @@ export function renderTaskSidebar(task, index) {
   return clone;
 }
 
-export function renderTaskMain(task, index){
+export function renderTaskMain(task, index) {
   const template = document.getElementById('task-template-main');
 
   const clone = template.content.cloneNode(true);
@@ -40,12 +40,8 @@ export function renderTaskMain(task, index){
   const taskWrapper = clone.querySelector('.task-wrapper');
 
   const taskTitle = clone.querySelector('.task-title');
-
-  // const taskDuedate = clone.querySelector('.task-dueDate');
   const taskFullDate = new Date(task.dueDate);
-  
-  console.log(taskFullDate);
-  
+
   const taskInDay = clone.querySelector('.inDay');
   const taskInMonth = clone.querySelector('.inMonth');
   const taskInYear = clone.querySelector('.inYear');
@@ -65,7 +61,7 @@ export function renderTaskMain(task, index){
   task.taskSteps.map((currentStep, stepIndex) => {
     //Parameters(Step, StepIndex, InMainSection)
     taskSteps.append(renderStep(currentStep, stepIndex, true));
-    
+
   })
 
   return clone;

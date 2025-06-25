@@ -55,14 +55,11 @@ export function attachEventListeners() {
 
     const fullDateContainer = e.target.parentNode;
 
-    if(fullDateContainer.classList.contains('task-dueDate')){
+    if (fullDateContainer.classList.contains('task-dueDate')) {
       taskIndex = e.target.closest(`[data-tk-index]`).dataset.tkIndex;
 
       currentTask = currentProject.projectTasks[taskIndex];
     }
-
-    console.log(fullDateContainer);
-    
 
     const inDay = fullDateContainer.querySelector('.inDay');
     const inMonth = fullDateContainer.querySelector('.inMonth');
@@ -77,6 +74,11 @@ export function attachEventListeners() {
       }
 
       const maxDay = getMaxDay(+inMonth.value, inYear.value);
+
+      if (inDay.value <= 0 && inDay.value.length === 2) {
+        inDay.value = '0' + 1;
+      }
+
       if (inDay.value > maxDay) {
         inDay.value = maxDay;
       }
