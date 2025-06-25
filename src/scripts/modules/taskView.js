@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { renderStep } from "./stepView";
 
 function renderNewTaskButton(){
@@ -40,10 +41,21 @@ export function renderTaskMain(task, index){
 
   const taskTitle = clone.querySelector('.task-title');
 
-  const taskDuedate = clone.querySelector('.task-dueDate');
+  // const taskDuedate = clone.querySelector('.task-dueDate');
+  const taskFullDate = new Date(task.dueDate);
+  
+  console.log(taskFullDate);
+  
+  const taskInDay = clone.querySelector('.inDay');
+  const taskInMonth = clone.querySelector('.inMonth');
+  const taskInYear = clone.querySelector('.inYear');
+
+  taskInDay.value = format(taskFullDate, 'dd')
+  taskInMonth.value = format(taskFullDate, 'MM')
+  taskInYear.value = format(taskFullDate, 'yyyy')
 
   taskTitle.textContent = task.title;
-  taskDuedate.textContent = task.dueDate;
+  // taskDuedate.textContent = task.dueDate;
   taskWrapper.setAttribute('data-tk-index', index);
 
   const taskSteps = clone.querySelector('.task-steps');

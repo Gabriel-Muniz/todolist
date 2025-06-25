@@ -35,6 +35,8 @@ export function attachEventListeners() {
     const projects = deserializeProjects();
     const projectIndex = e.target.closest('.project-wrapper').dataset.pjIndex;
     const currentProject = projects[projectIndex];
+    let taskIndex = null;
+    let currentTask = null;
 
     const allowedKeys = [
       "Backspace",
@@ -51,9 +53,20 @@ export function attachEventListeners() {
       return;
     }
 
-    const inDay = document.querySelector('.inDay');
-    const inMonth = document.querySelector('.inMonth');
-    const inYear = document.querySelector('.inYear');
+    const fullDateContainer = e.target.parentNode;
+
+    if(fullDateContainer.classList.contains('task-dueDate')){
+      taskIndex = e.target.closest(`[data-tk-index]`).dataset.tkIndex;
+
+      currentTask = currentProject.projectTasks[taskIndex];
+    }
+
+    console.log(fullDateContainer);
+    
+
+    const inDay = fullDateContainer.querySelector('.inDay');
+    const inMonth = fullDateContainer.querySelector('.inMonth');
+    const inYear = fullDateContainer.querySelector('.inYear');
 
     setTimeout(() => {
       if (inMonth.value > 12) {
@@ -76,9 +89,7 @@ export function attachEventListeners() {
 
       const date = new Date(inYear.value, inMonth.value - 1, inDay.value);
 
-      currentProject.dueDate = date;
-      console.log(date)
-
+      (currentTask) ? currentTask.dueDate = date : currentProject.dueDate = date;
       updateLocalStorage(projects);
       renderSidebarProjects();
     }, 10);
@@ -123,7 +134,7 @@ export function attachEventListeners() {
 
     }
 
-    if (inputField.dataset.type == 'inTask') {
+    if (inputField.dataset.type === 'inTask' && !inputField.dataset.input === 'dueDate') {
       const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
 
       const currentTask = currentProject.projectTasks[taskIndex];
@@ -295,7 +306,6 @@ function updateElement(element, newValue) {
     element.textContent = format(newValue, 'dd/MM/yyyy');
     return;
   }
-
 
   if (element) {
     element.textContent = newValue;

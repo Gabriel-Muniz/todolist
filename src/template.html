@@ -112,13 +112,31 @@
         >
           Task title main
         </h4>
-        <span
-          class="task-dueDate main"
-          contenteditable="true"
-          data-type="inTask"
-          data-input="dueDate"
-          >00/00/00</span
-        >
+        <span class="task-dueDate main" data-type="inTask" data-input="dueDate">
+          <input
+            class="inDay"
+            type="text"
+            inputmode="numeric"
+            maxlength="2"
+            placeholder="dd"
+          />
+          /
+          <input
+            class="inMonth"
+            type="text"
+            inputmode="numeric"
+            maxlength="2"
+            placeholder="mm"
+          />
+          /
+          <input
+            class="inYear"
+            type="text"
+            inputmode="numeric"
+            maxlength="4"
+            placeholder="yyyy"
+          />
+        </span>
       </div>
       <ul class="task-steps main"></ul>
     </li>

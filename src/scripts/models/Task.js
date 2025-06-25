@@ -1,5 +1,3 @@
-import { format } from "date-fns";
-
 export class Task {
   constructor(title, dueDate, progress = 0, taskSteps = []) {
     this._title = title;
@@ -17,7 +15,7 @@ export class Task {
   }
 
   get dueDate() {
-    return format(this._dueDate, 'dd/MM/yyyy');
+    return this._dueDate;
   }
 
   set dueDate(newDueDate) {

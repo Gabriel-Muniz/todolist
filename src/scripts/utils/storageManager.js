@@ -71,7 +71,7 @@ export function checkLocalStorage() {
   task4.addStep(step11);
   task4.addStep(step12);
 
-  let project2 = new Project('Get fit', 'Weekly running at the morning with my friend Nando', '2025-05-10', 'medium');
+  let project2 = new Project('Get fit', 'Weekly running at the morning with my friend Nando', new Date(), 'medium');
 
   let task5 = new Task('Run at the morning', new Date());
 
