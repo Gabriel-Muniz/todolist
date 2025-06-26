@@ -114,14 +114,14 @@ export function attachEventListeners() {
 
       console.log(inputField);
 
-      if (inputField.dataset.input == 'description') {
+      if (inputField.dataset.input === 'description') {
         currentProject[`${inputField.dataset.input}`] = inputField.textContent;
 
         updateLocalStorage(projects)
         return;
       }
 
-      if (!inputField.dataset.input == 'dueDate') {
+      if (inputField.dataset.input !== 'dueDate') {
 
         currentProject[`${inputField.dataset.input}`] = inputField.textContent;
 
