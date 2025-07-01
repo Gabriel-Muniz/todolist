@@ -1,8 +1,9 @@
 :root {
-  --main-color: #c2c2da;
-  --secondary-color: #0e242d;
-  --error-color: #ce9c85;
-  --success-color: #6fb1aa;
+  --main-color: #ffffff;
+  --secondary-color: #000000;
+  --accent-color: #556666;
+  --error-color: #dd4455;
+  --success-color: #339988;
 }
 body {
   min-height: 100vh;
@@ -140,7 +141,8 @@ h4 {
   margin: 0 12px;
 }
 .step-wrapper:hover {
-  background-color: #ac87c199;
+  background-color: var(--accent-color);
+  color: var(--main-color);
 }
 .step-wrapper:has(.step-status:hover) {
   background-color: var(--success-color);
@@ -149,12 +151,24 @@ h4 {
   text-decoration: line-through;
   opacity: 0.5;
 }
+.btn-task.delete {
+  background-color: transparent;
+  border: none;
+  border-right: 1px solid var(--secondary-color);
+}
 .task-wrapper:has(.btn-task.delete:hover) {
   background-color: var(--error-color);
 }
 .step-wrapper:has(.delete:hover) {
   background-color: var(--error-color);
 }
-.project-wrapper:has(.btn-project.delete:hover){
+.project-wrapper:has(.btn-project.delete:hover) {
   background-color: var(--error-color);
+}
+button {
+  cursor: pointer;
+}
+.delete:hover {
+  background-color: var(--secondary-color);
+  color: var(--main-color);
 }

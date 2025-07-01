@@ -122,7 +122,8 @@ export function attachEventListeners() {
       }
 
       if (inputField.dataset.input !== 'dueDate') {
-
+        console.log('TESTANDO 1 2 3 ');
+        
         currentProject[`${inputField.dataset.input}`] = inputField.textContent;
 
       }
@@ -136,7 +137,7 @@ export function attachEventListeners() {
 
     }
 
-    if (inputField.dataset.type === 'inTask' && !inputField.dataset.input === 'dueDate') {
+    if (inputField.dataset.type === 'inTask' || !inputField.dataset.input === 'dueDate') {
       const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
 
       const currentTask = currentProject.projectTasks[taskIndex];
