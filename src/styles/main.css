@@ -1,10 +1,14 @@
 :root {
   --main-color: #ffffff;
   --secondary-color: #000000;
-  --accent-color: #556666;
-  --error-color: #dd4455;
-  --success-color: #339988;
+  --accent-color: #55666622;
+  --error-color: #dd445555;
+  --success-color: #33998855;
 }
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
 body {
   min-height: 100vh;
   background-color: var(--main-color);
@@ -60,7 +64,7 @@ ul {
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 .step-wrapper {
-  padding: 0 15px;
+  padding: 0 20px;
   display: flex;
   align-items: center;
 }
@@ -83,7 +87,8 @@ ul {
 }
 .project-header.main {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-columns: 3fr 1fr auto;
+  padding: 0 10px;
 }
 .task-header.main {
   display: flex;
@@ -123,7 +128,6 @@ ul {
   background-color: transparent;
   border: none;
   padding-right: 0;
-  border-left: 1px solid var(--secondary-color);
 }
 .btn-step.delete:hover {
   /* background-color: black; */
@@ -142,7 +146,6 @@ h4 {
 }
 .step-wrapper:hover {
   background-color: var(--accent-color);
-  color: var(--main-color);
 }
 .step-wrapper:has(.step-status:hover) {
   background-color: var(--success-color);
@@ -168,7 +171,18 @@ h4 {
 button {
   cursor: pointer;
 }
-.delete:hover {
-  background-color: var(--secondary-color);
-  color: var(--main-color);
+.delete {
+  background-color: transparent;
+  border: none;
+}
+.delete-img {
+  justify-self: center;
+  filter: brightness(85%);
+}
+.delete-img:hover {
+  filter: brightness(0);
+}
+.btn-project {
+  display: flex;
+  justify-content: center;
 }
