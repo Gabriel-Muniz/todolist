@@ -109,6 +109,7 @@ export function attachEventListeners() {
     if (!inEdit) return;
 
     const inputField = e.target.closest('[data-input]');
+    
 
     if (inputField.dataset.type == 'inProject') {
 
@@ -137,13 +138,15 @@ export function attachEventListeners() {
 
     }
 
-    if (inputField.dataset.type === 'inTask' || !inputField.dataset.input === 'dueDate') {
+    if (inputField.dataset.type === 'inTask') {
       const taskIndex = e.target.closest('[data-tk-index]').dataset.tkIndex;
 
       const currentTask = currentProject.projectTasks[taskIndex];
 
       // currentTask[title] = inputField.textContent <- Example
       currentTask[inputField.dataset.input] = inputField.textContent;
+
+      if(inputField.dataset.input === 'dueDate') return;
 
       const newElemText = currentTask[inputField.dataset.input];
 
