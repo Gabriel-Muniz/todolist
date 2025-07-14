@@ -71,22 +71,9 @@ export function checkLocalStorage() {
   task4.addStep(step11);
   task4.addStep(step12);
 
-  let project2 = new Project('Get fit', 'Weekly running at the morning with my friend Nando', new Date(), 'medium');
-
-  let task5 = new Task('Run at the morning', new Date());
-
-  let step13 = new Step('Eat breakfast', true);
-  let step14 = new Step('Get ready (put clothes)');
-  let step15 = new Step('RUN!')
-
-  project2.addTask(task5);
-  task5.addStep(step13);
-  task5.addStep(step14);
-  task5.addStep(step15);
-
   let projects = [];
 
-  projects.push(project1, project2)
+  projects.push(project1)
 
   localStorage.setItem('projects', JSON.stringify(projects));
 }
