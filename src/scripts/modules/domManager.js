@@ -1,5 +1,5 @@
 import { renderProject, renderSidebarProjects } from "./projectView";
-import { deserializeProjects, getNewObject, getStringifiedProjects, setActiveProject, updateLocalStorage } from "../utils/storageManager";
+import { deserializeProjects, getNewObject, getSidebarState, getStringifiedProjects, setActiveProject, setSidebarState, updateLocalStorage } from "../utils/storageManager";
 import { format, isValid } from "date-fns";
 import { getMaxDay } from "../utils/dateHelper";
 
@@ -109,7 +109,7 @@ export function attachEventListeners() {
     if (!inEdit) return;
 
     const inputField = e.target.closest('[data-input]');
-    
+
 
     if (inputField.dataset.type == 'inProject') {
 
@@ -124,7 +124,7 @@ export function attachEventListeners() {
 
       if (inputField.dataset.input !== 'dueDate') {
         console.log('TESTANDO 1 2 3 ');
-        
+
         currentProject[`${inputField.dataset.input}`] = inputField.textContent;
 
       }
@@ -146,7 +146,7 @@ export function attachEventListeners() {
       // currentTask[title] = inputField.textContent <- Example
       currentTask[inputField.dataset.input] = inputField.textContent;
 
-      if(inputField.dataset.input === 'dueDate') return;
+      if (inputField.dataset.input === 'dueDate') return;
 
       const newElemText = currentTask[inputField.dataset.input];
 
@@ -190,6 +190,10 @@ export function attachEventListeners() {
   });
 
   const body = document.querySelector('.body');
+
+  body.addEventListener('mouseup', (e) => {
+    NEEDNAME();
+  })
 
   body.addEventListener('click', (e) => {
 
@@ -293,7 +297,6 @@ export function attachEventListeners() {
     }
     updateLocalStorage(projects);
     renderSidebarProjects();
-
   })
 }
 
@@ -316,6 +319,45 @@ function updateElement(element, newValue) {
   if (element) {
     element.textContent = newValue;
   }
+}
+
+function NEEDNAME() {
+  console.clear();
+  const sidebar = document.querySelector('.sidebar-section');
+  let aux = Array.from(sidebar.querySelectorAll('[data-pj-index]'));
+
+  let sidebarProjectState = [];
+
+  aux.forEach((element, index) => {
+    const projectSidebar = {
+      visible: `${element.querySelector('.project-body.hidden') ? false : true}`,
+      tasks: [],
+    }
+
+    const projectSidebarTasks = Array.from(element.querySelectorAll('.task-wrapper'));
+
+    projectSidebarTasks.forEach((taskElement, index) => {
+      projectSidebar.tasks.push((taskElement.querySelector('.task-body.hidden') ? false : true))
+    })
+
+    sidebarProjectState.push(projectSidebar)
+
+  });
+  setSidebarState(JSON.stringify(sidebarProjectState))
+}
+
+export function NEEDNAME1() {
+  const sidebarProjects = document.querySelectorAll('.project-wrapper.sidebar');
+  const projectsSidebar = getSidebarState();
+  console.log(sidebarProjects[0].querySelector('.project-body'));
+
+  projectsSidebar.forEach((project, index) => {
+    if (project.visible === 'false') {
+
+      sidebarProjects[index].querySelector('.project-body').classList.add('hidden');
+
+    }
+  })
 }
 
 //Update status real time

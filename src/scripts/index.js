@@ -6,7 +6,7 @@ import { Step } from "./models/Step";
 import { Task } from "./models/Task";
 
 import { renderProject, renderSidebarProjects } from "./modules/projectView";
-import { attachEventListeners } from "./modules/domManager";
+import { attachEventListeners, NEEDNAME1 } from "./modules/domManager";
 
 import { checkLocalStorage, deserializeProjects, getLastActiveProject, storageAvailable } from "./utils/storageManager";
 
@@ -93,7 +93,7 @@ let projects = deserializeProjects();
 
 
 renderSidebarProjects();
-
+NEEDNAME1();
 attachEventListeners();
 
 if (getLastActiveProject()) {

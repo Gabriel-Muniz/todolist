@@ -99,6 +99,14 @@ export function getLastActiveProject() {
   return localStorage.getItem('activeProjectIndex');
 }
 
+export function setSidebarState(projectsState) {
+  localStorage.setItem('projectState', projectsState);
+}
+
+export function getSidebarState() {
+  return JSON.parse(localStorage.getItem('projectState'));
+}
+
 export function deserializeProjects() {
   let jsonData = JSON.parse(localStorage.getItem('projects'));
 
@@ -138,7 +146,7 @@ export function getNewObject(type) {
   auxProject.addTask(auxTask);
   auxTask.addStep(auxStep);
 
-  if(type === 'project') return auxProject;
-  if(type === 'task') return auxTask;
-  if(type === 'step') return auxStep;
+  if (type === 'project') return auxProject;
+  if (type === 'task') return auxTask;
+  if (type === 'step') return auxStep;
 }
