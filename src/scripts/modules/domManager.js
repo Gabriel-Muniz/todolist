@@ -191,10 +191,6 @@ export function attachEventListeners() {
 
   const body = document.querySelector('.body');
 
-  body.addEventListener('mouseup', (e) => {
-    NEEDNAME();
-  })
-
   body.addEventListener('click', (e) => {
 
     const projects = deserializeProjects();
@@ -297,6 +293,13 @@ export function attachEventListeners() {
     }
     updateLocalStorage(projects);
     renderSidebarProjects();
+  })
+
+  body.addEventListener('mouseup', (e) => {
+    setTimeout(() => {
+      NEEDNAME();
+    }, 5);
+
   })
 }
 
