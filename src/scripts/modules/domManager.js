@@ -353,19 +353,16 @@ export function syncSidebarState() {
   const sidebarProjects = document.querySelectorAll('.project-wrapper.sidebar');
   const projectsSidebar = getSidebarState();
 
-  projectsSidebar.forEach((project, index) => {
+  projectsSidebar.forEach((project, projectIndex) => {
 
-    const currentSidebarProject = sidebarProjects[index].querySelector('.project-body');
+    const currentSidebarProject = sidebarProjects[projectIndex].querySelector('.project-body');
 
     const sidebarProjectTasks = currentSidebarProject.querySelectorAll('.task-body');
 
-    projectsSidebar[index].tasks.forEach((task, index) => {
-      console.log(sidebarProjectTasks);
-
-      console.log(task);
+    projectsSidebar[projectIndex].tasks.forEach((task, taskIndex) => {
       
       if (task === false) {
-        sidebarProjectTasks[index].classList.add('hidden')
+        sidebarProjectTasks[taskIndex].classList.add('hidden')
       }
     })
 
