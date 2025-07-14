@@ -1,6 +1,6 @@
 import { renderProject, renderSidebarProjects } from "./projectView";
 import { deserializeProjects, getNewObject, getSidebarState, getStringifiedProjects, setActiveProject, setSidebarState, updateLocalStorage } from "../utils/storageManager";
-import { format, isValid } from "date-fns";
+import { format, isValid, longFormatters } from "date-fns";
 import { getMaxDay } from "../utils/dateHelper";
 
 const sidebar = document.querySelector('.sidebar-section');
@@ -297,7 +297,7 @@ export function attachEventListeners() {
 
   body.addEventListener('mouseup', (e) => {
     setTimeout(() => {
-      NEEDNAME();
+      updateSidebarState();
     }, 5);
 
   })
@@ -324,8 +324,8 @@ function updateElement(element, newValue) {
   }
 }
 
-function NEEDNAME() {
-  console.clear();
+function updateSidebarState() {
+  // console.clear();
   const sidebar = document.querySelector('.sidebar-section');
   let aux = Array.from(sidebar.querySelectorAll('[data-pj-index]'));
 
@@ -349,17 +349,33 @@ function NEEDNAME() {
   setSidebarState(JSON.stringify(sidebarProjectState))
 }
 
-export function NEEDNAME1() {
+export function syncSidebarState() {
   const sidebarProjects = document.querySelectorAll('.project-wrapper.sidebar');
   const projectsSidebar = getSidebarState();
-  console.log(sidebarProjects[0].querySelector('.project-body'));
 
   projectsSidebar.forEach((project, index) => {
+
+    const currentSidebarProject = sidebarProjects[index].querySelector('.project-body');
+
+    const sidebarProjectTasks = currentSidebarProject.querySelectorAll('.task-body');
+
+    projectsSidebar[index].tasks.forEach((task, index) => {
+      console.log(sidebarProjectTasks);
+
+      console.log(task);
+      
+      if (task === false) {
+        sidebarProjectTasks[index].classList.add('hidden')
+      }
+    })
+
+
     if (project.visible === 'false') {
 
-      sidebarProjects[index].querySelector('.project-body').classList.add('hidden');
+      currentSidebarProject.classList.add('hidden');
 
     }
+
   })
 }
 
