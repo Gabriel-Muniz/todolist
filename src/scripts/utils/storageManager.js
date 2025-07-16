@@ -24,7 +24,7 @@ export function storageAvailable(type) {
 export function checkLocalStorage() {
   if (localStorage.getItem('projects')) return;
 
-  let project1 = new Project('Clean my room', 'Clean my study space, clean my room and organize my wardrobe', new Date(), 'high');
+  let project1 = new Project('Clean my room', 'Clean my study space, clean my room and organize my wardrobe', new Date(), 1);
 
   let task1 = new Task('Organize my wardrobe', new Date());
 
@@ -94,10 +94,18 @@ export function getSidebarState() {
   return JSON.parse(localStorage.getItem('projectState'));
 }
 
+function sortByPriority(projectA, projectB) {
+  if (projectA.priority < projectB.priority) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
 export function deserializeProjects() {
   let jsonData = JSON.parse(localStorage.getItem('projects'));
 
-  return jsonData.map(projectData => {
+  jsonData = jsonData.map(projectData => {
     const project = new Project(projectData._title, projectData._description, projectData._dueDate, projectData._priority);
 
     project.projectTasks = projectData._projectTasks.map(taskData => {
@@ -110,6 +118,8 @@ export function deserializeProjects() {
 
     return project;
   })
+
+  return jsonData.sort(sortByPriority);
 }
 
 export function updateLocalStorage(updatedProjects) {
@@ -124,7 +134,7 @@ export function getStringifiedProjects() {
 
 export function getNewObject(type) {
 
-  let auxProject = new Project('New project', 'New project for demonstration topics', new Date(), 'medium');
+  let auxProject = new Project('New project', 'New project for demonstration topics', new Date(), 2);
 
   let auxTask = new Task('New task', new Date());
 

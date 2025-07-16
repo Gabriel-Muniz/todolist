@@ -220,7 +220,7 @@ export function attachEventListeners() {
     if (e.target.closest('.project-priority')) {
 
       const selectedValue = document.querySelector('select');
-      currentProject.priority = selectedValue.options[selectedValue.selectedIndex].value;
+      currentProject.priority = Number(selectedValue.options[selectedValue.selectedIndex].value);
     }
 
     if (e.target.closest('.add-task')) { currentProject.addTask(getNewObject('task')); objectAdded = true; }

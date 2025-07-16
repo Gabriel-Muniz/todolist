@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 
 export class Project {
-  constructor(title, description, dueDate, priority = 'medium', projectTasks = []) {
+  constructor(title, description, dueDate, priority = 2, projectTasks = []) {
     this._title = title;
     this._description = description;
     this._dueDate = dueDate;
