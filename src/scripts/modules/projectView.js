@@ -57,6 +57,13 @@ export function renderProject(project, index) {
 
   const projectTitle = clone.querySelector('.project-title');
 
+  const projectPriority = clone.querySelector('.project-priority');
+
+  let auxPriority = projectPriority.querySelector(`option[value='${project.priority}']`);
+
+  auxPriority.selected = true;
+
+
   // const projectDuedate = clone.querySelector('.project-dueDate');
 
   const projectFullDate = new Date(project.dueDate);

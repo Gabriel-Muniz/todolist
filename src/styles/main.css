@@ -89,7 +89,7 @@ ul {
 }
 .project-header.main {
   display: grid;
-  grid-template-columns: 3fr 1fr auto;
+  grid-template-columns: 3fr 1fr 1fr auto;
   padding: 0 10px;
 }
 .project-description {

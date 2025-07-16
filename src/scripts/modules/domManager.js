@@ -217,6 +217,11 @@ export function attachEventListeners() {
     const stepIndex = (e.target.closest('.step-wrapper')) ? e.target.closest('[data-st-index]').dataset.stIndex : null;
     let currentStep = (stepIndex) ? currentTask.taskSteps[stepIndex] : null;
 
+    if (e.target.closest('.project-priority')) {
+
+      const selectedValue = document.querySelector('select');
+      currentProject.priority = selectedValue.options[selectedValue.selectedIndex].value;
+    }
 
     if (e.target.closest('.add-task')) { currentProject.addTask(getNewObject('task')); objectAdded = true; }
     if (e.target.closest('.add-step')) { currentTask.addStep(getNewObject('step')); objectAdded = true; }
@@ -360,7 +365,7 @@ export function syncSidebarState() {
     const sidebarProjectTasks = currentSidebarProject.querySelectorAll('.task-body');
 
     projectsSidebar[projectIndex].tasks.forEach((task, taskIndex) => {
-      
+
       if (task === false) {
         sidebarProjectTasks[taskIndex].classList.add('hidden')
       }
