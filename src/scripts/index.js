@@ -94,10 +94,11 @@ let projects = deserializeProjects();
 
 renderSidebarProjects();
 attachEventListeners();
-syncSidebarState();
+
 
 if (getLastActiveProject()) {
   let loadedProjectIndex = getLastActiveProject();
 
   renderProject(projects[loadedProjectIndex], loadedProjectIndex);
 }
+syncSidebarState();

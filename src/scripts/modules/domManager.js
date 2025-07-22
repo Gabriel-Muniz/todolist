@@ -1,5 +1,5 @@
 import { renderProject, renderSidebarProjects } from "./projectView";
-import { deserializeProjects, getNewObject, getSidebarState, getStringifiedProjects, setActiveProject, setSidebarState, updateLocalStorage } from "../utils/storageManager";
+import { deserializeProjects, getNewObject, getSidebarState, getStringifiedProjects, setActiveProject, setSidebarState, sortByPriority, updateLocalStorage } from "../utils/storageManager";
 import { format, isValid, longFormatters } from "date-fns";
 import { getMaxDay } from "../utils/dateHelper";
 
@@ -26,6 +26,7 @@ export function attachEventListeners() {
 
     updateLocalStorage(projects);
     renderSidebarProjects();
+    updateSidebarState();
   })
 
   mainSection.addEventListener('keydown', (e) => {
@@ -94,6 +95,7 @@ export function attachEventListeners() {
       (currentTask) ? currentTask.dueDate = date : currentProject.dueDate = date;
       updateLocalStorage(projects);
       renderSidebarProjects();
+      updateSidebarState();
     }, 10);
 
   })
@@ -131,7 +133,7 @@ export function attachEventListeners() {
       const newElemText = currentProject[`${inputField.dataset.input}`];
 
       //Get sidebar project element to update
-      const sidebarElemUpdate = sidebar.children[Number(projectIndex) + 1] // +1 to account the add project button
+      const sidebarElemUpdate = sidebar.querySelector(`[data-pj-index='${projectIndex}']`)
         .querySelector(`.project-${inputField.dataset.input}`);
 
       updateElement(sidebarElemUpdate, newElemText);
@@ -204,6 +206,7 @@ export function attachEventListeners() {
 
       updateLocalStorage(projects);
       renderSidebarProjects();
+      updateSidebarState();
       return;
     }
 
@@ -221,6 +224,15 @@ export function attachEventListeners() {
 
       const selectedValue = document.querySelector('select');
       currentProject.priority = Number(selectedValue.options[selectedValue.selectedIndex].value);
+
+      const sortedProjects = deserializeProjects().sort(sortByPriority);
+
+      sortedProjects.find(element => {
+        if(element === currentProject){
+          
+        }
+      })
+
     }
 
     if (e.target.closest('.add-task')) { currentProject.addTask(getNewObject('task')); objectAdded = true; }
@@ -230,6 +242,7 @@ export function attachEventListeners() {
       console.log(objectAdded);
 
       cleanMainSection();
+      updateSidebarState();
       renderProject(currentProject, projectIndex);
     }
 
@@ -281,6 +294,7 @@ export function attachEventListeners() {
         cleanMainSection();
         updateLocalStorage(projects);
         renderSidebarProjects();
+        updateSidebarState();
 
         return
       }
@@ -292,12 +306,12 @@ export function attachEventListeners() {
         currentTask.removeStep(stepIndex);
       }
 
-
       cleanMainSection();
       renderProject(currentProject, projectIndex);
     }
     updateLocalStorage(projects);
     renderSidebarProjects();
+    updateSidebarState();
   })
 
   body.addEventListener('mouseup', (e) => {
@@ -313,6 +327,7 @@ export function cleanMainSection() {
 }
 
 function updateElement(element, newValue) {
+  // updateSidebarState();
   if (element.matches('input')) {
 
     element.checked = (newValue == true) ? true : false;
@@ -330,7 +345,6 @@ function updateElement(element, newValue) {
 }
 
 function updateSidebarState() {
-  // console.clear();
   const sidebar = document.querySelector('.sidebar-section');
   let aux = Array.from(sidebar.querySelectorAll('[data-pj-index]'));
 
@@ -338,6 +352,7 @@ function updateSidebarState() {
 
   aux.forEach((element, index) => {
     const projectSidebar = {
+      index: index,
       visible: `${element.querySelector('.project-body.hidden') ? false : true}`,
       tasks: [],
     }

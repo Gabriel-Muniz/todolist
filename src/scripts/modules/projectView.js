@@ -1,10 +1,12 @@
 import { format } from "date-fns";
-import { deserializeProjects } from "../utils/storageManager";
+import { deserializeProjects, sortByPriority } from "../utils/storageManager";
 import { renderTaskMain, renderTaskSidebar } from "./taskView";
 
 export function renderSidebarProjects() {
 
   const projects = deserializeProjects();
+
+  const sortedProjects = projects.toSorted(sortByPriority);
 
   const template = document.getElementById('project-template-sidebar')
 
@@ -18,7 +20,8 @@ export function renderSidebarProjects() {
 
   sidebar.append(btnAddProject);
 
-  projects.map((project, index) => {
+  sortedProjects.map((project, index = null) => {
+    index = projects.findIndex(element => element === project);
 
     const clone = template.content.cloneNode(true);
 

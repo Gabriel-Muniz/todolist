@@ -94,7 +94,7 @@ export function getSidebarState() {
   return JSON.parse(localStorage.getItem('projectState'));
 }
 
-function sortByPriority(projectA, projectB) {
+export function sortByPriority(projectA, projectB) {
   if (projectA.priority < projectB.priority) {
     return -1;
   } else {
@@ -105,7 +105,7 @@ function sortByPriority(projectA, projectB) {
 export function deserializeProjects() {
   let jsonData = JSON.parse(localStorage.getItem('projects'));
 
-  jsonData = jsonData.map(projectData => {
+  return jsonData = jsonData.map(projectData => {
     const project = new Project(projectData._title, projectData._description, projectData._dueDate, projectData._priority);
 
     project.projectTasks = projectData._projectTasks.map(taskData => {
@@ -119,7 +119,6 @@ export function deserializeProjects() {
     return project;
   })
 
-  return jsonData.sort(sortByPriority);
 }
 
 export function updateLocalStorage(updatedProjects) {
