@@ -101,4 +101,5 @@ if (getLastActiveProject()) {
 
   renderProject(projects[loadedProjectIndex], loadedProjectIndex);
 }
-syncSidebarState();
+
+syncSidebarState()

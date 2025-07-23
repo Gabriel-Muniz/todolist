@@ -26,7 +26,6 @@ export function attachEventListeners() {
 
     updateLocalStorage(projects);
     renderSidebarProjects();
-    updateSidebarState();
   })
 
   mainSection.addEventListener('keydown', (e) => {
@@ -95,7 +94,6 @@ export function attachEventListeners() {
       (currentTask) ? currentTask.dueDate = date : currentProject.dueDate = date;
       updateLocalStorage(projects);
       renderSidebarProjects();
-      updateSidebarState();
     }, 10);
 
   })
@@ -125,7 +123,6 @@ export function attachEventListeners() {
       }
 
       if (inputField.dataset.input !== 'dueDate') {
-        console.log('TESTANDO 1 2 3 ');
 
         currentProject[`${inputField.dataset.input}`] = inputField.textContent;
 
@@ -152,7 +149,7 @@ export function attachEventListeners() {
 
       const newElemText = currentTask[inputField.dataset.input];
 
-      const sidebarTaskUpdate = sidebar.children[Number(projectIndex) + 1] // +1 to account the add project button
+      const sidebarTaskUpdate = sidebar.querySelector(`[data-pj-index='${projectIndex}']`)
         .querySelector(`[data-tk-index='${taskIndex}']`)
         .querySelector('.task-title');
 
@@ -176,7 +173,7 @@ export function attachEventListeners() {
 
       const newElemText = currentStep.title;
 
-      const sidebarStepUpdate = sidebar.children[Number(projectIndex) + 1] // +1 to account the add project button
+      const sidebarStepUpdate = sidebar.querySelector(`[data-pj-index='${projectIndex}']`)
         .querySelector(`[data-tk-index='${parentTaskIndex}']`)
         .querySelector('.task-steps')
         .children[stepIndex]
@@ -205,8 +202,8 @@ export function attachEventListeners() {
       projects.push(getNewObject('project'));
 
       updateLocalStorage(projects);
-      renderSidebarProjects();
       updateSidebarState();
+      renderSidebarProjects();
       return;
     }
 
@@ -225,14 +222,7 @@ export function attachEventListeners() {
       const selectedValue = document.querySelector('select');
       currentProject.priority = Number(selectedValue.options[selectedValue.selectedIndex].value);
 
-      const sortedProjects = deserializeProjects().sort(sortByPriority);
-
-      sortedProjects.find(element => {
-        if(element === currentProject){
-          
-        }
-      })
-
+      syncSidebarState();
     }
 
     if (e.target.closest('.add-task')) { currentProject.addTask(getNewObject('task')); objectAdded = true; }
@@ -242,8 +232,9 @@ export function attachEventListeners() {
       console.log(objectAdded);
 
       cleanMainSection();
-      updateSidebarState();
       renderProject(currentProject, projectIndex);
+      updateSidebarState();
+
     }
 
 
@@ -266,7 +257,7 @@ export function attachEventListeners() {
         const taskBody = e.target.closest('.task-wrapper').querySelector('.task-body');
         taskBody.classList.toggle('hidden');
 
-        return
+        return;
       }
     }
 
@@ -294,8 +285,6 @@ export function attachEventListeners() {
         cleanMainSection();
         updateLocalStorage(projects);
         renderSidebarProjects();
-        updateSidebarState();
-
         return
       }
 
@@ -311,7 +300,7 @@ export function attachEventListeners() {
     }
     updateLocalStorage(projects);
     renderSidebarProjects();
-    updateSidebarState();
+    syncSidebarState();
   })
 
   body.addEventListener('mouseup', (e) => {
@@ -327,7 +316,6 @@ export function cleanMainSection() {
 }
 
 function updateElement(element, newValue) {
-  // updateSidebarState();
   if (element.matches('input')) {
 
     element.checked = (newValue == true) ? true : false;
@@ -345,21 +333,22 @@ function updateElement(element, newValue) {
 }
 
 function updateSidebarState() {
+
   const sidebar = document.querySelector('.sidebar-section');
   let aux = Array.from(sidebar.querySelectorAll('[data-pj-index]'));
 
   let sidebarProjectState = [];
 
-  aux.forEach((element, index) => {
+  aux.forEach((element) => {
     const projectSidebar = {
-      index: index,
+      index: element.dataset.pjIndex,
       visible: `${element.querySelector('.project-body.hidden') ? false : true}`,
       tasks: [],
     }
 
     const projectSidebarTasks = Array.from(element.querySelectorAll('.task-wrapper'));
 
-    projectSidebarTasks.forEach((taskElement, index) => {
+    projectSidebarTasks.forEach((taskElement) => {
       projectSidebar.tasks.push((taskElement.querySelector('.task-body.hidden') ? false : true))
     })
 
@@ -370,30 +359,24 @@ function updateSidebarState() {
 }
 
 export function syncSidebarState() {
-  const sidebarProjects = document.querySelectorAll('.project-wrapper.sidebar');
   const projectsSidebar = getSidebarState();
 
-  projectsSidebar.forEach((project, projectIndex) => {
-
-    const currentSidebarProject = sidebarProjects[projectIndex].querySelector('.project-body');
-
-    const sidebarProjectTasks = currentSidebarProject.querySelectorAll('.task-body');
-
-    projectsSidebar[projectIndex].tasks.forEach((task, taskIndex) => {
-
-      if (task === false) {
-        sidebarProjectTasks[taskIndex].classList.add('hidden')
-      }
-    })
-
+  projectsSidebar.forEach(project => {
+    const currentSidebarProject = sidebar.querySelector(`[data-pj-index="${project.index}"]`).querySelector('.project-body');
 
     if (project.visible === 'false') {
-
       currentSidebarProject.classList.add('hidden');
-
     }
 
-  })
-}
+    project.tasks.forEach((task, index) => {
+      const currentSidebarTask = currentSidebarProject.querySelector(`[data-tk-index="${index}"]`).querySelector('.task-body');
 
-//Update status real time
+      if (!task) {
+        currentSidebarTask.classList.add('hidden');
+      }
+
+    })
+
+  })
+
+}
