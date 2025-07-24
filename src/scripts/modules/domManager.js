@@ -240,17 +240,20 @@ export function attachEventListeners() {
 
     if (e.target.closest('.sidebar-section')) {
 
-      if (e.target.closest('.project-header')) {
+      if (e.target.closest('.expand-img')) {
         const projectBody = e.target.closest('.project-wrapper').querySelector('.project-body');
         projectBody.classList.toggle('hidden');
 
+        return;
+      }
+
+      if (e.target.closest('.project-header')) {
         const projectIndex = e.target.closest('[data-pj-index]').dataset.pjIndex;
 
         cleanMainSection();
         renderProject(currentProject, projectIndex)
         setActiveProject(projectIndex);
 
-        return;
       }
 
       if (e.target.closest('.task-header')) {

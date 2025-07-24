@@ -44,7 +44,6 @@ body {
 
 .project-header.sidebar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0 10px;
 }
@@ -135,6 +134,9 @@ ul {
 .project-dueDate {
   width: max-content;
 }
+.project-dueDate.sidebar {
+  margin-left: auto;
+}
 .inDay,
 .inMonth {
   width: 4ch;
@@ -206,12 +208,25 @@ button {
   border: none;
 }
 .delete-img,
-.add-img {
+.add-img,
+.expand-img {
   justify-self: center;
   filter: brightness(85%);
 }
-.delete-img:hover {
+.delete-img:hover,
+.add-img:hover {
   filter: brightness(0);
+}
+.expand-img {
+  filter: brightness(0);
+  margin-right: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+  transition: transform 0.15s ease;
+}
+.project-header.sidebar:has(~ .hidden) > .expand-img {
+  transform: rotate(-90deg);
+  filter: brightness(85%);
 }
 .btn-project {
   display: flex;
