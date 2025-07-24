@@ -175,8 +175,7 @@ export function attachEventListeners() {
 
       const sidebarStepUpdate = sidebar.querySelector(`[data-pj-index='${projectIndex}']`)
         .querySelector(`[data-tk-index='${parentTaskIndex}']`)
-        .querySelector('.task-steps')
-        .children[stepIndex]
+        .querySelector(`[data-st-index="${stepIndex}"`)
         .querySelector('.step-title');
 
       updateElement(sidebarStepUpdate, newElemText)
@@ -267,7 +266,7 @@ export function attachEventListeners() {
     if (e.target.closest('input[type="checkbox"]')) {
       currentStep.changeStatus();
 
-      const sidebarProject = sidebar.children[Number(projectIndex) + 1].dataset.pjIndex;
+      const sidebarProject = sidebar.querySelector(`[data-pj-index="${projectIndex}"]`);
       const mainSectionProject = mainSection.querySelector('.project-wrapper').dataset.pjIndex;
 
       const stepMainSection = document.querySelector('.project-wrapper.main')
