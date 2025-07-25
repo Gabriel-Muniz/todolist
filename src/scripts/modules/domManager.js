@@ -334,7 +334,7 @@ function updateElement(element, newValue) {
   }
 }
 
-function updateSidebarState() {
+export function updateSidebarState() {
 
   const sidebar = document.querySelector('.sidebar-section');
   let aux = Array.from(sidebar.querySelectorAll('[data-pj-index]'));

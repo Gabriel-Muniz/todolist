@@ -253,9 +253,6 @@ button {
   margin-right: 2ch;
   background-color: transparent;
 }
-select {
-  /* background-color: transparent; */
-}
 .project-title.main {
   height: 2em;
   font-weight: bold;
