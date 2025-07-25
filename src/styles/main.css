@@ -4,6 +4,9 @@
   --accent-color: #55666622;
   --error-color: #dd445555;
   --success-color: #33998855;
+  --high-priority: #dd4455;
+  --medium-priority: #ffbb66;
+  --low-priority: #339988;
 }
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
@@ -88,7 +91,8 @@ ul {
 }
 .project-header.main {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr auto;
+  grid-template-columns: 3fr auto 1fr auto;
+  align-items: center;
   padding: 0 10px;
 }
 .project-description {
@@ -137,13 +141,16 @@ ul {
 .project-dueDate.sidebar {
   margin-left: auto;
 }
-.inDay,
-.inMonth {
-  width: 4ch;
-}
 .inYear {
+  text-align: left;
   width: 6ch;
 }
+.inDay,
+.inMonth {
+  text-align: center;
+  width: 4ch;
+}
+
 .inDay,
 .inMonth,
 .inYear {
@@ -241,4 +248,36 @@ button {
 }
 .task-steps:hover > .add-step {
   display: flex;
+}
+.project-priority {
+  margin-right: 2ch;
+  background-color: transparent;
+}
+select {
+  /* background-color: transparent; */
+}
+.project-title.main {
+  height: 2em;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+.project-description.main {
+  height: min-content;
+  font-size: 1.2em;
+
+  grid-column: 1 / span 4;
+}
+div {
+  align-content: center;
+}
+.option-priority:nth-child(1) {
+  color: white;
+  background-color: var(--high-priority);
+}
+.option-priority:nth-child(2) {
+  background-color: var(--medium-priority);
+}
+.option-priority:nth-child(3) {
+  color: white;
+  background-color: var(--low-priority);
 }
