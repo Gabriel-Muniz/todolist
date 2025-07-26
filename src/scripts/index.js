@@ -26,5 +26,5 @@ if (getLastActiveProject()) {
   renderProject(projects[loadedProjectIndex], loadedProjectIndex);
 }
 
-updateSidebarState();
 syncSidebarState()
+
