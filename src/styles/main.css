@@ -24,7 +24,7 @@ body {
 .sidebar-section {
   display: flex;
   align-items: center;
-  flex: 2;
+  flex: 1;
   flex-direction: column;
   border-right: 2px solid var(--secondary-color);
   padding: 20px 0;
@@ -39,12 +39,18 @@ body {
 .project-wrapper.sidebar,
 .add-project {
   width: 80%;
+  height: min-content;
   border: 1px solid var(--secondary-color);
   border-radius: 8px;
   margin-bottom: 10px;
   padding: 10px 0 0 0;
 }
-
+.add-project {
+  padding: 10px 0;
+}
+.project-wrapper.sidebar:has(> .project-body.hidden) {
+  padding: 10px 0;
+}
 .project-header.sidebar {
   display: flex;
   align-items: center;
@@ -78,7 +84,8 @@ ul {
 }
 .step-wrapper,
 .task-wrapper,
-.project-wrapper {
+.project-wrapper,
+.add-project {
   transition: all 0.3s ease-in;
 }
 .step-title {
@@ -107,33 +114,33 @@ ul {
 .add-step {
   display: flex;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
   justify-content: center;
 }
 .add-task {
   border: 0;
   border-top: 1px dashed var(--secondary-color);
+  padding: 5px 0;
+  align-self: center;
+  margin-top: -5px;
 }
 .add-task:hover,
-.add-step:hover {
+.add-step:hover,
+.add-project:hover {
   background-color: var(--success-color);
-}
-.add-task {
-  margin-top: 12px;
+  opacity: 1;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 .add-step {
+  margin-bottom: 5px;
+  font-weight: 100;
+  border: 1px dashed #000;
+  opacity: 0.4;
   order: 1;
-  width: 100%;
-  align-self: flex-start;
-  padding-left: 20px;
-  justify-content: left;
-}
-.add-step:hover:after {
-  content: "Add STEP";
-}
-.add-task:hover:after {
-  content: "  Add TASK";
+  width: 99%;
+  align-self: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
 }
 .project-dueDate {
   width: max-content;
@@ -175,6 +182,9 @@ ul {
 }
 h4 {
   align-content: center;
+}
+h5 {
+  font-weight: normal;
 }
 .btn-task.delete {
   margin: 0 12px;
@@ -220,8 +230,8 @@ button {
   justify-self: center;
   filter: brightness(85%);
 }
-.delete-img:hover,
-.add-img:hover {
+*:hover > .add-img,
+*:hover > .delete-img {
   filter: brightness(0);
 }
 .expand-img {
@@ -246,8 +256,9 @@ button {
 .hidden {
   display: none;
 }
-.task-steps:hover > .add-step {
-  display: flex;
+.task-steps {
+  transition: all 1s ease;
+  overflow: hidden;
 }
 .project-priority {
   margin-right: 2ch;

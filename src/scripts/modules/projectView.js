@@ -14,11 +14,10 @@ export function renderSidebarProjects() {
 
   sidebar.innerHTML = ''
 
-  const btnAddProject = document.createElement('div');
-  btnAddProject.classList.add('add-project');
-  btnAddProject.textContent = '+';
+  const btnAddProject = document.getElementById('add-project-template');
+  const cloneAddBtn = btnAddProject.content.cloneNode(true);
 
-  sidebar.append(btnAddProject);
+  sidebar.append(cloneAddBtn);
 
   sortedProjects.map((project, index = null) => {
     index = projects.findIndex(element => element === project);
