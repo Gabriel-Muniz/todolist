@@ -201,8 +201,8 @@ export function attachEventListeners() {
       projects.push(getNewObject('project'));
 
       updateLocalStorage(projects);
-      updateSidebarState();
       renderSidebarProjects();
+      syncSidebarState();
       return;
     }
 
