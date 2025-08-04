@@ -19,12 +19,15 @@ let projects = deserializeProjects();
 renderSidebarProjects();
 attachEventListeners();
 
+if (projects.length !== 0) {
 
-if (getLastActiveProject()) {
-  let loadedProjectIndex = getLastActiveProject();
+  if (getLastActiveProject()) {
+    let loadedProjectIndex = getLastActiveProject();
 
-  renderProject(projects[loadedProjectIndex], loadedProjectIndex);
+    renderProject(projects[loadedProjectIndex], loadedProjectIndex);
+  }
+  syncSidebarState()
+
 }
 
-syncSidebarState()
 

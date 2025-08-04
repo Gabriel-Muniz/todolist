@@ -198,6 +198,7 @@ export function attachEventListeners() {
     let objectAdded = false;
 
     if (e.target.closest('.add-project')) {
+
       projects.push(getNewObject('project'));
 
       updateLocalStorage(projects);
@@ -228,18 +229,16 @@ export function attachEventListeners() {
     if (e.target.closest('.add-step')) { currentTask.addStep(getNewObject('step')); objectAdded = true; }
 
     if (objectAdded) {
-      console.log(objectAdded);
-
       cleanMainSection();
       renderProject(currentProject, projectIndex);
-      updateSidebarState();
-
     }
 
 
     if (e.target.closest('.sidebar-section')) {
 
       if (e.target.closest('.expand-img')) {
+        console.log(e.target.closest('.project-wrapper').querySelector('.project-body'));
+
         const projectBody = e.target.closest('.project-wrapper').querySelector('.project-body');
         projectBody.classList.toggle('hidden');
 
@@ -287,7 +286,8 @@ export function attachEventListeners() {
         cleanMainSection();
         updateLocalStorage(projects);
         renderSidebarProjects();
-        return
+        syncSidebarState();
+        return;
       }
 
       if (btnDelete.classList.contains('btn-task')) {
@@ -303,11 +303,13 @@ export function attachEventListeners() {
     updateLocalStorage(projects);
     renderSidebarProjects();
     syncSidebarState();
+
   })
 
   body.addEventListener('mouseup', (e) => {
     setTimeout(() => {
       updateSidebarState();
+      // syncSidebarState();
     }, 5);
 
   })
@@ -337,48 +339,83 @@ function updateElement(element, newValue) {
 export function updateSidebarState() {
 
   const sidebar = document.querySelector('.sidebar-section');
-  let aux = Array.from(sidebar.querySelectorAll('[data-pj-index]'));
+  const projects = deserializeProjects();
 
   let sidebarProjectState = [];
 
-  aux.forEach((element) => {
-    const projectSidebar = {
-      index: element.dataset.pjIndex,
-      visible: `${element.querySelector('.project-body.hidden') ? false : true}`,
+  const projectsSidebar = Array.from(sidebar.querySelectorAll('[data-pj-index]'));
+
+  projectsSidebar.forEach((projectWrapper) => {
+
+    const sidebarProject = {
+      projectIndex: projectWrapper.dataset.pjIndex,
+      visible: projectWrapper.querySelector('.project-body.hidden') ? false : true,
       tasks: [],
     }
 
-    const projectSidebarTasks = Array.from(element.querySelectorAll('.task-wrapper'));
+    const tasksSidebar = Array.from(projectWrapper.querySelectorAll('[data-tk-index]'));
 
-    projectSidebarTasks.forEach((taskElement) => {
-      projectSidebar.tasks.push((taskElement.querySelector('.task-body.hidden') ? false : true))
+    tasksSidebar.forEach(taskWrapper => {
+      const sidebarTask = {
+        taskIndex: taskWrapper.dataset.tkIndex,
+        visible: taskWrapper.querySelector('.task-body.hidden') ? false : true,
+      }
+
+      sidebarProject.tasks.push(sidebarTask);
     })
 
-    sidebarProjectState.push(projectSidebar)
+    sidebarProjectState.push(sidebarProject);
 
-  });
+  })
+
+  // projects.forEach((project, index) => {
+  //   const aux = sidebar.querySelector(`[data-pj-index]`);
+
+  //   const projectSidebar = {
+  //     index: aux.dataset.pjIndex,
+  //     visible: `${aux.querySelector('.project-body.hidden') ? false : true}`,
+  //     tasks: [],
+  //   }
+
+  //   project.projectTasks.forEach((task, taskIndex) => {
+  //     let taskVisibility = aux.querySelector(`[data-tk-index="${taskIndex}"]`);
+  //     taskVisibility = taskVisibility.querySelector('.task-body.hidden') ? false : true;
+  //     projectSidebar.tasks.push(taskVisibility);
+  //     console.log(projectSidebar);
+
+  //   })
+
+  //   sidebarProjectState.push(projectSidebar);
+
+  // })
+
   setSidebarState(JSON.stringify(sidebarProjectState))
 }
 
 export function syncSidebarState() {
   const projectsSidebar = getSidebarState();
 
-  projectsSidebar.forEach(project => {
-    const currentSidebarProject = sidebar.querySelector(`[data-pj-index="${project.index}"]`).querySelector('.project-body');
+  projectsSidebar.forEach((sidebarProjectObj) => {
+    const sidebar = document.querySelector('.sidebar-section');
+    const sidebarProjectElement = sidebar.querySelector(`[data-pj-index="${sidebarProjectObj.projectIndex}"]`);
 
-    if (project.visible === 'false') {
-      currentSidebarProject.classList.add('hidden');
+    if (!sidebarProjectElement) { return };
+
+
+    if (!sidebarProjectObj.visible) {
+      sidebarProjectElement.querySelector('.project-body').classList.add('hidden');
     }
 
-    project.tasks.forEach((task, index) => {
-      const currentSidebarTask = currentSidebarProject.querySelector(`[data-tk-index="${index}"]`).querySelector('.task-body');
+    sidebarProjectObj.tasks.forEach(sidebarTaskObj => {
+      const sidebarTaskElement = sidebarProjectElement.querySelector(`[data-tk-index="${sidebarTaskObj.taskIndex}"]`);
 
-      if (!task) {
-        currentSidebarTask.classList.add('hidden');
+      if(!sidebarTaskElement) { return };
+
+      if(!sidebarTaskObj.visible) {
+        sidebarTaskElement.querySelector('.task-body').classList.add('hidden')
       }
 
     })
-
   })
 
 }

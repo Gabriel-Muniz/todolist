@@ -71,6 +71,9 @@ ul {
 .task-wrapper:has(> .hidden):not(:last-child) {
   border-bottom: 2px solid rgba(0, 0, 0, 0.4);
 }
+.task-wrapper:last-child:has(> .hidden) {
+  margin-bottom: 10px;
+}
 
 .task-body {
   display: flex;
@@ -83,7 +86,7 @@ ul {
   align-items: center;
 }
 .step-wrapper,
-.task-wrapper,
+/* .task-wrapper, */
 .project-wrapper,
 .add-project {
   transition: all 0.3s ease-in;
@@ -132,7 +135,7 @@ ul {
   font-weight: bold;
 }
 .add-step {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   font-weight: 100;
   border: 1px dashed #000;
   opacity: 0.4;

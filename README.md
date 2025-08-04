@@ -40,3 +40,6 @@ Work on sidebar and mainSection desync
 - Problably need to apply eventListeners to the window and not the body/sidebar
 
 # ---> REFAC DUEDATE ON TASKS <---
+
+INDEXANDO ERRADO VISIBILIDADE DE TASKS
+Ao fazer a exclusão de uma task, a taske anterior pega o valor de visible da task antiga
