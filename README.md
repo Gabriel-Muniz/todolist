@@ -1,45 +1,16 @@
-# Must have
+# To-do
 
-- "todos" are going to be objects created dynamically. Using function factories or cronstructors classes.
-- **Projects** must have: **title**, **description**, **dueDate**, **priority** and projectTasks\[](Array containing all tasks related to the project)
-- **Tasks** must have: title, dueDate, progress and taskSteps\[](Array containing all steps related to the project)
-- **Steps** must have: title and status(boolean)
+To-do web app is a single page application to keep tracking of upcoming tasks
 
-## Classes
+## What I Learned
 
-class Project
+- Working with modules
+- Date and LocalStorage
 
-```
-addTask();
-removeTask();
-```
+## Observations
 
-class Task
+Many lessons can be taken from this project - Being, in my opinion, the most important ones:
 
-```
-addStep();
-removeStep();
-```
-
-class Step
-
-```
-changeStatus()
-```
-
-## Studys to-do
-
-- [Deserialization](https://javascript.info/json#using-reviver)
-- Two way binding
-- [date-fns](https://github.com/date-fns/date-fns)
-
-## to-do
-
-Work on sidebar and mainSection desync
-
-- Problably need to apply eventListeners to the window and not the body/sidebar
-
-# ---> REFAC DUEDATE ON TASKS <---
-
-INDEXANDO ERRADO VISIBILIDADE DE TASKS
-Ao fazer a exclusão de uma task, a taske anterior pega o valor de visible da task antiga
+- Planning before starting to code is extremely important to pave the road ahead. If possible, document everything planned to future reference. Documenting what has already been done also goes a long way!
+- Visual reference helps to brighten up ideas and spark new ideas. It's not about plagiarism, but about inspiration!
+- Even with planning beforehand, things can — and probably will — get out of hand. So expect to rework some things and reconsider others!
